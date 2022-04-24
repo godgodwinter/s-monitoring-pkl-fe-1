@@ -26,19 +26,22 @@ function scrollBehavior(to) {
     class="z-10 top-0 block z-998 font-serif h-full fixed flex-row bg-white w-4/5 md:hidden shadow-xl border-r-2"
   >
     <div class="px-2 ml-5 pt-0 pb-5 overflow-y-auto h-full">
-      <a>
+      <router-link :to="{ name: 'LandingIndex' }">
         <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Home</h1>
-      </a>
+      </router-link>
 
-      <a>
+      <router-link :to="{ name: 'LandingSiswa' }">
         <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Siswa</h1>
-      </a>
+      </router-link>
 
-      <a>
+      <router-link :to="{ name: 'LandingPengawasLapangan' }">
         <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Pengawas Lapangan</h1>
-      </a>
-      <a>
+      </router-link>
+      <router-link :to="{ name: 'LandingPengawasSekolah' }">
         <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Pengawas Sekolah</h1>
+      </router-link>
+      <a href="http://127.0.0.1:3004">
+        <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Administrator</h1>
       </a>
 
       <!-- <h1 class="text-xs text-gray-400 font-bold py-2">Installation</h1> -->
@@ -118,6 +121,11 @@ function scrollBehavior(to) {
                   :to="{ name: 'LandingPengawasSekolah' }"
                   class="text-gray-800 font-normal text-sm hover:text-sky-600 hover:underline"
                   >Pengawas Sekolah</router-link
+                >
+                <a
+                  href="http://127.0.0.1:3004"
+                  class="text-gray-800 font-normal text-sm hover:text-sky-600 hover:underline"
+                  >Administrator</a
                 >
                 <!-- <a href="https://github.com/godgodwinter" target="blank" class="text-gray-800 font-semibold text-sm hover:text-vue-600 hover:underline">Github </a> -->
               </div>

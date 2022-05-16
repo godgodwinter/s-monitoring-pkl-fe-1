@@ -9,6 +9,7 @@ const props = defineProps({
   alamat: { type: String, required: false, default: "Alamat Perusahaan" },
   jmlTersedia: { type: String, required: false, default: "0/0" },
   tersedia: { type: String, required: false, default: 0 },
+  type: { type: String, required: false, default: "pilihan" }, // preview, pilihan
 });
 
 const doKetTidakTersedia = () => {
@@ -63,20 +64,22 @@ const doPilih = (id, label) => {
           </div>
           <div class="flex item-center justify-between mt-3">
             <h1 class="text-gray-700 font-bold text-xl">{{ props.jmlTersedia }}</h1>
-            <button
-              @click="doPilih(props.id, props.title)"
-              class="px-3 py-2 bg-sky-600 text-white text-xs font-bold uppercase rounded"
-              v-if="tersedia > 0"
-            >
-              Pilih
-            </button>
-            <button
-              @click="doKetTidakTersedia()"
-              class="px-3 py-2 bg-gray-400 text-gray-100 text-xs font-bold uppercase rounded"
-              v-else
-            >
-              Pilih
-            </button>
+            <div v-if="type != 'preview'">
+              <button
+                @click="doPilih(props.id, props.title)"
+                class="px-3 py-2 bg-sky-600 text-white text-xs font-bold uppercase rounded"
+                v-if="tersedia > 0"
+              >
+                Pilih
+              </button>
+              <button
+                @click="doKetTidakTersedia()"
+                class="px-3 py-2 bg-gray-400 text-gray-100 text-xs font-bold uppercase rounded"
+                v-else
+              >
+                Pilih
+              </button>
+            </div>
           </div>
         </div>
       </div>

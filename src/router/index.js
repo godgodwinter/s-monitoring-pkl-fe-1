@@ -14,8 +14,13 @@ import LandingPengawasSekolah from '../views/landing/LandingPengawasSekolah.vue'
 import SiswaDashboard from '../views/admin/Dashboard.vue'
 //profile
 import MenuSiswaProfileIndex from '../views/admin/profile/Index.vue'
+//pendaftaranPkl
 import MenuSiswaPendaftaranPklIndex from '../views/admin/pendaftaranpkl/Index.vue'
+import MenuSiswaPendaftaranPklStepDua from '../views/admin/pendaftaranpkl/StepDua.vue'
+import MenuSiswaPendaftaranPklStepTiga from '../views/admin/pendaftaranpkl/StepTiga.vue'
+//absensi
 import MenuSiswaAbsensiIndex from '../views/admin/absensi/Index.vue'
+//jurnal
 import MenuSiswaJurnalIndex from '../views/admin/jurnal/Index.vue'
 
 const routes = [
@@ -83,6 +88,14 @@ const routes = [
         path: '/pages/siswa/pendaftaranpkl',
         name: 'MenuSiswaPendaftaranPkl',
         component: MenuSiswaPendaftaranPklIndex,
+      },{
+        path: '/pages/siswa/pendaftaranpkl/step2',
+        name: 'MenuSiswaPendaftaranPklStep2',
+        component: MenuSiswaPendaftaranPklStepDua,
+      },{
+        path: '/pages/siswa/pendaftaranpkl/step3',
+        name: 'MenuSiswaPendaftaranPklStep3',
+        component: MenuSiswaPendaftaranPklStepTiga,
       },{
         path: '/pages/siswa/absensi',
         name: 'MenuSiswaAbsensi',

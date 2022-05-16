@@ -14,6 +14,9 @@ import LandingPengawasSekolah from '../views/landing/LandingPengawasSekolah.vue'
 import SiswaDashboard from '../views/admin/Dashboard.vue'
 //profile
 import MenuSiswaProfileIndex from '../views/admin/profile/Index.vue'
+import MenuSiswaPendaftaranPklIndex from '../views/admin/pendaftaranpkl/Index.vue'
+import MenuSiswaAbsensiIndex from '../views/admin/absensi/Index.vue'
+import MenuSiswaJurnalIndex from '../views/admin/jurnal/Index.vue'
 
 const routes = [
   {
@@ -76,6 +79,18 @@ const routes = [
         path: '/pages/siswa/profile',
         name: 'MenuSiswaProfile',
         component: MenuSiswaProfileIndex,
+      },{
+        path: '/pages/siswa/pendaftaranpkl',
+        name: 'MenuSiswaPendaftaranPkl',
+        component: MenuSiswaPendaftaranPklIndex,
+      },{
+        path: '/pages/siswa/absensi',
+        name: 'MenuSiswaAbsensi',
+        component: MenuSiswaAbsensiIndex,
+      },{
+        path: '/pages/siswa/jurnal',
+        name: 'MenuSiswaJurnal',
+        component: MenuSiswaJurnalIndex,
       },
     ],
   },
@@ -87,4 +102,5 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
 export default router;

@@ -60,7 +60,7 @@ const getData = async () => {
 
     return response;
   } catch (error) {
-    Toast.danger("Warning", "Gagal memuat data settings Aplikasi");
+    // Toast.danger("Warning", "Gagal memuat data settings Aplikasi");
     console.error(error);
   }
 };

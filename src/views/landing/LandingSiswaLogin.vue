@@ -47,7 +47,7 @@ const doLogin = async (username, password) => {
     return response.data;
   } catch (error) {
     // console.error(error);
-    Toast.danger("Warning", "Login gagal2!");
+    Toast.danger("Warning", "Login gagal!");
   }
 };
 

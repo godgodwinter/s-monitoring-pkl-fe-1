@@ -248,7 +248,20 @@ periksaId();
               <div class="grid grid-cols-2">
                 <div class="px-4 py-2 font-semibold">Tempat, Tanggal Lahir</div>
                 <div class="px-4 py-2">
-                  {{ dataSiswa.tempatlahir }}, {{ dataSiswa.tgllahir }}
+                  {{ dataSiswa.tempatlahir }},
+                  <Datepicker
+                    v-model="dataSiswa.tgllahir"
+                    format="yyyy/MM/dd"
+                    value-format="yyyy-MM-dd"
+                    disabled
+                  >
+                    <template #calendar-header="{ index, day }">
+                      <div :class="index === 5 || index === 6 ? 'red-color' : ''">
+                        {{ day }}
+                      </div>
+                    </template>
+                  </Datepicker>
+                  <!-- {{ dataSiswa.tempatlahir }}, {{ dataSiswa.tgllahir }} -->
                 </div>
               </div>
             </div>

@@ -76,6 +76,24 @@ async function goLogout() {
           <ul class="space-y-2 pb-2 lg:flex flex-wrap px-2 gap-0 justify-between">
             <li class="bg-white lg:w-1/2 py-2">
               <router-link
+                :to="{ name: 'MenuSiswaDashboard' }"
+                class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
+                  />
+                </svg>
+                <span class="ml-3">Dashboard </span>
+              </router-link>
+            </li>
+            <li class="bg-white lg:w-1/2 py-0">
+              <router-link
                 :to="{ name: 'MenuSiswaProfile' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
@@ -96,7 +114,7 @@ async function goLogout() {
             </li>
             <li class="bg-white lg:w-1/2">
               <router-link
-                :to="{ name: 'MenuSiswaDashboard' }"
+                :to="{ name: 'MenuSiswaPendaftaranPkl' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
@@ -115,7 +133,7 @@ async function goLogout() {
             </li>
             <li class="bg-white lg:w-1/2">
               <router-link
-                :to="{ name: 'MenuSiswaDashboard' }"
+                :to="{ name: 'MenuSiswaAbsensi' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
@@ -135,7 +153,7 @@ async function goLogout() {
             </li>
             <li class="bg-white lg:w-1/2">
               <router-link
-                :to="{ name: 'MenuSiswaDashboard' }"
+                :to="{ name: 'MenuSiswaJurnal' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg

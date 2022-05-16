@@ -1,10 +1,20 @@
 <script setup>
 import { computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter, useRoute } from "vue-router";
 
 const store = useStore();
+const router = useRouter();
+
 const isSideBarActive = computed(() => store.state.isSideBarActive);
-console.log(isSideBarActive.value);
+const getDataSettings = computed(() => store.state.dataSettings);
+const getDataAuth = computed(() => store.state.dataAuth);
+// console.log(isSideBarActive.value);
+async function goLogout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("isLogin");
+  router.go();
+}
 </script>
 <template>
   <aside
@@ -27,47 +37,97 @@ console.log(isSideBarActive.value);
                   class="rounded-full w-20 h-20 object-cover"
                 />
                 <div>
-                  <p class="text-gray-500 text-md font-semibold">PAIJO</p>
-                  <p class="text-gray-500 text-sm font-medium">123</p>
-                  <p class="text-gray-500 text-xs font-light mt-2">SISWA</p>
+                  <p class="text-gray-500 text-md font-semibold">
+                    {{ getDataAuth.nama }}
+                  </p>
+                  <p class="text-gray-500 text-sm font-medium">
+                    {{ getDataAuth.nomeridentitas }}
+                  </p>
+                  <p class="text-gray-500 text-xs font-medium mt-2">
+                    {{ getDataAuth.kelas }}
+                  </p>
+                  <p class="text-gray-500 text-xs font-light mt-2">
+                    {{ getDataAuth.hakakses }}
+                  </p>
                 </div>
               </div>
             </li>
             <li class="bg-white lg:w-1/2">
-              <router-link
-                :to="{ name: 'LandingIndex' }"
-                class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
+              <button
+                @click="goLogout()"
+                class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group border border-2"
               >
                 <svg
-                  width="24"
-                  height="24"
                   xmlns="http://www.w3.org/2000/svg"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
                 >
                   <path
-                    d="M6 23h-3v-5.486c-1.827-.518-3-2.24-3-3.988 0-.585.129-1.172.407-1.716-.323-1.661.657-3.344 2.356-3.881l.018-.005c.773-1.102 2.057-1.826 3.535-1.898l5.666-5.026 12.018 10.661-1.33 1.493-10.688-9.482-3.274 2.905c.305.162.591.358.849.589l2.415-2.142 9.026 7.989v9.987h-2.998v-7h-5l-.008 7h-5.992v-6.061c.546-.125 1.034-.463 1.317-1.044 2.096.786 3.746-2.273 1.82-3.562 1.073-1.237.188-2.747-1.208-2.525-.673-2.384-4.178-2.384-4.851 0-1.31-.235-2.295 1.094-1.385 2.291-1.654 1.38-.162 4.084 1.872 3.473.214.74.794 1.2 1.435 1.362v6.066zm.451-10.678c1.493-1.023 3.242.768 2.303 2.226.002-1.473-.853-2.282-2.303-2.226m-2.119 1.191c-.668-1.002-.34-2.366.705-2.968.589-.338 1.33-.369 1.953-.07 1.06.507-2.743-.678-2.658 3.038"
+                    fill-rule="evenodd"
+                    d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+                    clip-rule="evenodd"
                   />
                 </svg>
                 <span class="ml-3 text-sm">Logout </span>
-              </router-link>
+              </button>
             </li>
           </ul>
           <ul class="space-y-2 pb-2 lg:flex flex-wrap px-2 gap-0 justify-between">
-            <li class="bg-white lg:w-1/2">
+            <li class="bg-white lg:w-1/2 py-2">
               <router-link
-                :to="{ name: 'LandingIndex' }"
+                :to="{ name: 'MenuSiswaProfile' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
-                  width="24"
-                  height="24"
                   xmlns="http://www.w3.org/2000/svg"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
                 >
                   <path
-                    d="M6 23h-3v-5.486c-1.827-.518-3-2.24-3-3.988 0-.585.129-1.172.407-1.716-.323-1.661.657-3.344 2.356-3.881l.018-.005c.773-1.102 2.057-1.826 3.535-1.898l5.666-5.026 12.018 10.661-1.33 1.493-10.688-9.482-3.274 2.905c.305.162.591.358.849.589l2.415-2.142 9.026 7.989v9.987h-2.998v-7h-5l-.008 7h-5.992v-6.061c.546-.125 1.034-.463 1.317-1.044 2.096.786 3.746-2.273 1.82-3.562 1.073-1.237.188-2.747-1.208-2.525-.673-2.384-4.178-2.384-4.851 0-1.31-.235-2.295 1.094-1.385 2.291-1.654 1.38-.162 4.084 1.872 3.473.214.74.794 1.2 1.435 1.362v6.066zm.451-10.678c1.493-1.023 3.242.768 2.303 2.226.002-1.473-.853-2.282-2.303-2.226m-2.119 1.191c-.668-1.002-.34-2.366.705-2.968.589-.338 1.33-.369 1.953-.07 1.06.507-2.743-.678-2.658 3.038"
+                    fill-rule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="ml-3">Profile </span>
+              </router-link>
+            </li>
+            <li class="bg-white lg:w-1/2">
+              <router-link
+                :to="{ name: 'MenuSiswaDashboard' }"
+                class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z" />
+                  <path
+                    d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z"
+                  />
+                </svg>
+                <span class="ml-3">Daftar PKL </span>
+              </router-link>
+            </li>
+            <li class="bg-white lg:w-1/2">
+              <router-link
+                :to="{ name: 'MenuSiswaDashboard' }"
+                class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                    clip-rule="evenodd"
                   />
                 </svg>
                 <span class="ml-3">Absensi </span>
@@ -75,18 +135,40 @@ console.log(isSideBarActive.value);
             </li>
             <li class="bg-white lg:w-1/2">
               <router-link
-                :to="{ name: 'LandingIndex' }"
+                :to="{ name: 'MenuSiswaDashboard' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
-                  width="24"
-                  height="24"
                   xmlns="http://www.w3.org/2000/svg"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="ml-3">Jurnal </span>
+              </router-link>
+            </li>
+            <li class="bg-white lg:w-1/2">
+              <router-link
+                :to="{ name: 'MenuSiswaDashboard' }"
+                class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
                 >
                   <path
-                    d="M6 23h-3v-5.486c-1.827-.518-3-2.24-3-3.988 0-.585.129-1.172.407-1.716-.323-1.661.657-3.344 2.356-3.881l.018-.005c.773-1.102 2.057-1.826 3.535-1.898l5.666-5.026 12.018 10.661-1.33 1.493-10.688-9.482-3.274 2.905c.305.162.591.358.849.589l2.415-2.142 9.026 7.989v9.987h-2.998v-7h-5l-.008 7h-5.992v-6.061c.546-.125 1.034-.463 1.317-1.044 2.096.786 3.746-2.273 1.82-3.562 1.073-1.237.188-2.747-1.208-2.525-.673-2.384-4.178-2.384-4.851 0-1.31-.235-2.295 1.094-1.385 2.291-1.654 1.38-.162 4.084 1.872 3.473.214.74.794 1.2 1.435 1.362v6.066zm.451-10.678c1.493-1.023 3.242.768 2.303 2.226.002-1.473-.853-2.282-2.303-2.226m-2.119 1.191c-.668-1.002-.34-2.366.705-2.968.589-.338 1.33-.369 1.953-.07 1.06.507-2.743-.678-2.658 3.038"
+                    fill-rule="evenodd"
+                    d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
+                    clip-rule="evenodd"
                   />
                 </svg>
                 <span class="ml-3">PKL </span>
@@ -94,18 +176,19 @@ console.log(isSideBarActive.value);
             </li>
             <li class="bg-white lg:w-1/2">
               <router-link
-                :to="{ name: 'LandingIndex' }"
+                :to="{ name: 'MenuSiswaDashboard' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
                 <svg
-                  width="24"
-                  height="24"
                   xmlns="http://www.w3.org/2000/svg"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
                 >
                   <path
-                    d="M6 23h-3v-5.486c-1.827-.518-3-2.24-3-3.988 0-.585.129-1.172.407-1.716-.323-1.661.657-3.344 2.356-3.881l.018-.005c.773-1.102 2.057-1.826 3.535-1.898l5.666-5.026 12.018 10.661-1.33 1.493-10.688-9.482-3.274 2.905c.305.162.591.358.849.589l2.415-2.142 9.026 7.989v9.987h-2.998v-7h-5l-.008 7h-5.992v-6.061c.546-.125 1.034-.463 1.317-1.044 2.096.786 3.746-2.273 1.82-3.562 1.073-1.237.188-2.747-1.208-2.525-.673-2.384-4.178-2.384-4.851 0-1.31-.235-2.295 1.094-1.385 2.291-1.654 1.38-.162 4.084 1.872 3.473.214.74.794 1.2 1.435 1.362v6.066zm.451-10.678c1.493-1.023 3.242.768 2.303 2.226.002-1.473-.853-2.282-2.303-2.226m-2.119 1.191c-.668-1.002-.34-2.366.705-2.968.589-.338 1.33-.369 1.953-.07 1.06.507-2.743-.678-2.658 3.038"
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"
                   />
                 </svg>
                 <span class="ml-3">Pemberitahuan </span>

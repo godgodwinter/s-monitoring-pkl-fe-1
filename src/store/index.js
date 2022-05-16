@@ -27,6 +27,23 @@ export default createStore({
         perPageDropdown: [10, 15, 25, 50],
         styleClass: 'vgt-table striped bordered condensed',
       },
+      //getSettings
+      dataSettings: {
+        'app_nama' : 'SI MONITORING PKL',
+        'app_namapendek' : 'SIPKL',
+        'app_tapel_aktif' : '2',
+        'app_tapel_aktif_nama' : '2022/2023',
+        'pendaftaranpkl' : 'Aktif',
+        'login_siswa' : 'Aktif',
+        'login_pembimbingsekolah' : 'Aktif',
+        'login_pembimbinglapangan' : 'Aktif',
+      },
+      dataAuth: {
+        'nama' : 'Nama Siswa',
+        'kelas' : 'Kelas Siswa',
+        'nomeridentitas' : '1',
+        'hakakses' : 'User',
+      },
     };
   },
   getters: {
@@ -40,6 +57,9 @@ export default createStore({
     },
     setIsLogin(state, value) {
       state.isLogin = value;
+    },
+    setDataSettings(state, value) {
+      state.dataSettings = value;
     },
     setDataAuth(state, value) {
       state.dataAuth = value;

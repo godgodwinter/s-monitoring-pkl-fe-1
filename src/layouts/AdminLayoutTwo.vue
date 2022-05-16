@@ -1,5 +1,7 @@
 <script setup>
 // library
+import Api from "@/axios/axios.js";
+import { ref } from "vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
@@ -7,25 +9,63 @@ import { useRouter } from "vue-router";
 import NavBar from "../components/template/NavBarTwo.vue";
 import SideBar from "../components/template/SideBarTwo.vue";
 import Footer from "../components/template/Footer.vue";
+import Toast from "@/components/lib/Toast.js";
 
 const store = useStore();
 const router = useRouter();
 
-// const dataToken = computed(() => store.state.token);
+const dataToken = computed(() => store.state.token);
 
-// const dataIsLogin = computed(() => store.state.isLogin);
+const dataIsLogin = computed(() => store.state.isLogin);
 
-// function isLogin() {
-//   if (dataIsLogin.value) {
-//     // console.log('Anda sudah login!');
-//   } else {
-//     router.push({ name: "LandingIndex" });
-//     // console.log('Anda belum login!');
-//   }
-// }
+function isLogin() {
+  if (dataIsLogin.value) {
+    // console.log('Anda sudah login!');
+  } else {
+    router.push({ name: "LandingSiswaLogin" });
+    // console.log('Anda belum login!');
+  }
+}
 // console.log(dataToken.value,dataIsLogin.value);
 
-// isLogin();
+isLogin();
+
+const data = ref("");
+const dataAuth = ref({
+  name: "Nama User",
+  nomeridentitas: "1",
+  hakakses: "User",
+});
+const getData = async () => {
+  try {
+    const response = await Api.get("siswa/settings/get");
+    // console.log(response);
+    // data.value = response.data;
+    data.value = response.data;
+    let dk = "Kelas tidak ditemukan";
+
+    if (response.dataAuth.kelasdetail) {
+      dk = `${response.dataAuth.kelasdetail.kelas.tingkatan} ${response.dataAuth.kelasdetail.kelas.jurusan} ${response.dataAuth.kelasdetail.kelas.suffix}`;
+    }
+    dataAuth.value = {
+      nama: response.dataAuth.nama,
+      nomeridentitas: response.dataAuth.nomeridentitas,
+      kelas: dk,
+      hakakses: "Siswa",
+    };
+    // console.log(data.value);
+    store.commit("setDataSettings", data.value);
+    store.commit("setDataAuth", dataAuth.value);
+    // console.log(getDataSettings.value);
+
+    return response;
+  } catch (error) {
+    Toast.danger("Warning", "Gagal memuat data settings Aplikasi");
+    console.error(error);
+  }
+};
+
+getData();
 // periksa token asli/tidaknya(token expired) jika token tidak valid maka redirect ke landing page
 </script>
 <template>

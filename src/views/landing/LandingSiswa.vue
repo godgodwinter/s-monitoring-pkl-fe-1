@@ -26,7 +26,7 @@ import ButtonTwo from "@/components/atoms/ButtonTwo.vue";
       <router-link :to="{ name: 'LandingSiswaLogin' }">
         <ButtonTwo title="Masuk Sebagai Siswa"></ButtonTwo>
       </router-link>
-      <ButtonOne title="Format Pengajuan PKL"></ButtonOne>
+      <ButtonOne title="Alur Pendaftaran PKL"></ButtonOne>
     </div>
   </div>
 

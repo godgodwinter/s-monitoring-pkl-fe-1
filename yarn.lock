@@ -1022,6 +1022,11 @@ vite@^2.9.5:
   optionalDependencies:
     fsevents "~2.3.2"
 
+vue-final-modal@^3.4.3:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/vue-final-modal/-/vue-final-modal-3.4.4.tgz#9f4cdb0aabab86a14eb0c005b2645159b0f2095c"
+  integrity sha512-4nOLU+cMcUqAT0kg+64+Hi96kkQPOph2LOJa7Fl58BXlTyhfRxaMuz3M91wi2ooMIL4poWA8428P5GIAXSpuZg==
+
 vue-good-table-next@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/vue-good-table-next/-/vue-good-table-next-0.1.0.tgz"
@@ -1029,6 +1034,11 @@ vue-good-table-next@^0.1.0:
   dependencies:
     date-fns "^2.25.0"
     lodash.isequal "^4.5.0"
+
+vue-pdf-embed@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/vue-pdf-embed/-/vue-pdf-embed-1.1.1.tgz#049aad4476cf93d1feedd341741c5965fd897e22"
+  integrity sha512-Ydbgiay/xIp0aW1mv62/JNkUlsk9dpbba+K03CKniIoos+N0URab+jEZW5RzJ0JbN6bplp+j+pAc78El1d8htw==
 
 vue-router@4:
   version "4.0.14"

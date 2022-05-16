@@ -35,10 +35,10 @@ function scrollBehavior(to) {
       </router-link>
 
       <router-link :to="{ name: 'LandingPengawasLapangan' }">
-        <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Pengawas Lapangan</h1>
+        <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Pembimbing Lapangan</h1>
       </router-link>
       <router-link :to="{ name: 'LandingPengawasSekolah' }">
-        <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Pengawas Sekolah</h1>
+        <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Pembimbing Sekolah</h1>
       </router-link>
       <a href="http://127.0.0.1:3004">
         <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Administrator</h1>
@@ -115,12 +115,12 @@ function scrollBehavior(to) {
                 <router-link
                   :to="{ name: 'LandingPengawasLapangan' }"
                   class="text-gray-800 font-normal text-sm hover:text-sky-600 hover:underline"
-                  >Pengawas Lapangan</router-link
+                  >Pembimbing Lapangan</router-link
                 >
                 <router-link
                   :to="{ name: 'LandingPengawasSekolah' }"
                   class="text-gray-800 font-normal text-sm hover:text-sky-600 hover:underline"
-                  >Pengawas Sekolah</router-link
+                  >Pembimbing Sekolah</router-link
                 >
                 <a
                   href="http://127.0.0.1:3004"

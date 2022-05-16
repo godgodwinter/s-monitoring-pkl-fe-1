@@ -12,6 +12,8 @@ import LandingPengawasSekolah from '../views/landing/LandingPengawasSekolah.vue'
 
 //admin
 import SiswaDashboard from '../views/admin/Dashboard.vue'
+//profile
+import MenuSiswaProfileIndex from '../views/admin/profile/Index.vue'
 
 const routes = [
   {
@@ -62,6 +64,14 @@ const routes = [
         path: '/pages/siswa', 
         name: 'PagesSiswaIndex',
         component: SiswaDashboard,
+      }, {
+        path: '/pages/siswa', 
+        name: 'MenuSiswaDashboard',
+        component: SiswaDashboard,
+      }, {
+        path: '/pages/siswa/profile',
+        name: 'MenuSiswaProfile',
+        component: MenuSiswaProfileIndex,
       },
     ],
   },

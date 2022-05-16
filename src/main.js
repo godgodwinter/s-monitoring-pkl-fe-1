@@ -13,6 +13,8 @@ import vSelect from 'vue-select'
 import store from './store';
 import router from './router';
 
+import vfmPlugin from 'vue-final-modal'
+import Popper from 'vue3-popper';
 
 // import the styles
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
@@ -31,11 +33,17 @@ app.use(router);
 app.use(store);
 app.use(AOS.init());
 app.use(VueGoodTablePlugin)
+app.use(vfmPlugin({
+    key: '$vfm',
+    componentName: 'VueFinalModal',
+    dynamicContainerName: 'ModalsContainer'
+  }))
 
 // calling component
 app.component('QuillEditor', QuillEditor)
 app.component('Datepicker', Datepicker);
 app.component('v-select', vSelect);
+app.component('Popper', Popper);
 
 //execute
 app.mount('#app');

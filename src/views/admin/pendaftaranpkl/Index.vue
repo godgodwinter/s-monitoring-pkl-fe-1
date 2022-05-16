@@ -95,17 +95,34 @@ const doBatal = () => {
                 <div class="px-4 py-2">
                   <span
                     class="bg-orange-400 py-2 px-2 rounded-lg text-white font-bold text-sm"
-                    >Menunggu</span
+                    >Belum Daftar</span
                   >
                 </div>
+              </div>
+
+              <div v-if="dataTempatPkl.label">
+                <CardCompany
+                  title="Nama Tempat Prakerin"
+                  tersedia="1"
+                  jmlTersedia="4/5"
+                ></CardCompany>
               </div>
             </div>
             <div class="flex justify-end py-4 px-4">
               <div class="flex space-x-4 mb-6 text-sm font-medium">
                 <div class="flex-auto flex space-x-4">
                   <button
-                    class="h-10 px-6 font-semibold rounded-md bg-black text-white"
+                    class="h-10 px-6 font-semibold rounded-md bg-emerald-500 text-white"
                     type="submit"
+                    v-if="dataTempatPkl.label"
+                  >
+                    Simpan dan Lanjutkan Proses
+                  </button>
+
+                  <button
+                    class="h-10 px-6 font-semibold rounded-md bg-gray-400 text-gray-200"
+                    type="submit"
+                    v-else
                   >
                     Simpan dan Lanjutkan Proses
                   </button>

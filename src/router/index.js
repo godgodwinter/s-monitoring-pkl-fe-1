@@ -66,6 +66,10 @@ const routes = [
         component: SiswaDashboard,
       }, {
         path: '/pages/siswa', 
+        name: 'AdminDashboard',
+        component: SiswaDashboard,
+      }, {
+        path: '/pages/siswa', 
         name: 'MenuSiswaDashboard',
         component: SiswaDashboard,
       }, {

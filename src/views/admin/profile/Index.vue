@@ -23,7 +23,7 @@ const dataDetail = ref({
 });
 const getDataId = async () => {
   try {
-    const response = await Api.get(`admin/siswa/${id}`);
+    const response = await Api.get(`siswa/profile/get`);
     // console.log(response.data);
     dataAsli.value = response.data;
     dataSiswa.value = response.data;
@@ -38,7 +38,7 @@ const getDataId = async () => {
 
 const periksaId = async () => {
   try {
-    const response = await Api.get(`admin/pendaftaranpkl/list/periksaid/${id}`);
+    const response = await Api.get(`siswa/profile/pendaftaranpkl`);
     status.value = response.data;
     if (response.data == "Belum Daftar") {
       Toast.danger("Warning", "Belum Daftar Prakerin, Daftar lebih dahulu");
@@ -55,10 +55,16 @@ const periksaId = async () => {
         "Data ditemukan, Proses pendaftaran siswa ini telah selesai!"
       );
     }
-    dataDetail.value.tempatpkl.label = ` ${response.tempatpkl.nama} `;
+    dataDetail.value.tempatpkl.label = ` ${
+      response.tempatpkl ? response.tempatpkl.nama : ""
+    } `;
     dataDetail.value.tempatpkl.tgl_pengajuan = ` ${response.tgl_pengajuan} `;
-    dataDetail.value.pembimbinglapangan.label = ` ${response.pembimbinglapangan.nama} `;
-    dataDetail.value.pembimbingsekolah.label = ` ${response.pembimbingsekolah.nama} `;
+    dataDetail.value.pembimbinglapangan.label = ` ${
+      response.pembimbinglapangan ? response.pembimbinglapangan.nama : ""
+    } `;
+    dataDetail.value.pembimbingsekolah.label = ` ${
+      response.pembimbingsekolah ? response.pembimbingsekolah.nama : ""
+    } `;
 
     return response;
   } catch (error) {
@@ -66,22 +72,15 @@ const periksaId = async () => {
     console.error(error);
   }
 };
-if (id == "") {
-  Toast.danger("Warning", "Data siswa tidak ditemukan");
-} else {
-  getDataId();
-  periksaId();
-}
+getDataId();
+periksaId();
 </script>
 <template>
   <BreadCrumb>
     <template v-slot:content>
-      <router-link :to="{ name: 'AdminSiswa' }"
-        ><button class="underline rounded rounded-md hover:bg-gray-200">
-          Siswa
-        </button></router-link
-      >
-      <BreadCrumbSpace /> Profile</template
+      <!-- <button class="underline rounded rounded-md hover:bg-gray-200">Siswa</button> -->
+      <!-- <BreadCrumbSpace />  -->
+      Profile</template
     >
   </BreadCrumb>
   <div class="pt-4 px-10">
@@ -362,13 +361,11 @@ if (id == "") {
               </div>
             </div>
           </div>
-          <router-link :to="{ name: 'AdminPendaftaranProsesSatu', params: { id: id } }">
-            <button
-              class="block w-full text-blue-800 text-sm font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4"
-            >
-              Daftar / Update Data Prakerin
-            </button>
-          </router-link>
+          <button
+            class="block w-full text-blue-800 text-sm font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4"
+          >
+            Daftar Prakerin
+          </button>
         </div>
         <!-- End of about section -->
         <div class="my-4"></div>

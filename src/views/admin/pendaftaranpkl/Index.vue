@@ -1,5 +1,6 @@
 <script setup>
 import CardStepPendaftaranVue from "../../../components/organismes/pendaftaranpkl/CardStepPendaftaran.vue";
+import CardCompany from "../../../components/atoms/CardCompanySatu.vue";
 import Api from "@/axios/axios.js";
 import { useStore } from "vuex";
 import { computed } from "vue";
@@ -10,6 +11,41 @@ import Toast from "@/components/lib/Toast.js";
 import Popper from "../../../components/atoms/Popper.vue";
 const router = useRouter();
 const route = useRoute();
+let statusPerusahaan = [
+  {
+    label: "Semua Data",
+    id: "Semua Data",
+  },
+  {
+    label: "Tersedia",
+    id: "Tersedia",
+  },
+  {
+    label: "Tidak Tersedia",
+    id: "Tidak Tersedia",
+  },
+];
+const PencarianSettings = ref({
+  statusPerusahaan: { label: "Tersedia", id: "Tersedia" },
+});
+let randomAngka = () => {
+  return Math.floor(Math.random() * 4);
+};
+const dataTempatPkl = computed(() => {
+  return store.state.tempatPklSelected;
+});
+
+const doPilihTempatPkl = (label = "", id = "") => {
+  dataTempatPkl.value.label = label;
+  dataTempatPkl.value.id = id;
+};
+
+let dataTempatPklSelected = { id: "", label: "" };
+const doBatal = () => {
+  dataTempatPklSelected.id = "";
+  dataTempatPklSelected.label = "";
+  store.commit("seTempatPklSelected", dataTempatPklSelected);
+};
 </script>
 <template>
   <div class="px-3 py-3">
@@ -43,7 +79,15 @@ const route = useRoute();
               <div class="grid grid-cols-2">
                 <div class="px-4 py-2 font-semibold">Pilih Tempat Prakerin</div>
                 <div class="px-4 py-2">
-                  <p class="text-gray-400 font-bold">Belum memilih</p>
+                  <p class="text-gray-400 font-bold">
+                    {{ dataTempatPkl.label ? dataTempatPkl.label : "Belum memilih" }}
+                    <span
+                      class="text-gray-200 bg-gray-400 py-1 px-1 rounded-lg ml-2"
+                      v-if="dataTempatPkl.label"
+                      @click="doBatal()"
+                      >X</span
+                    >
+                  </p>
                 </div>
               </div>
               <div class="grid grid-cols-2">
@@ -101,8 +145,14 @@ const route = useRoute();
             </span>
             <span class="tracking-wide">Cari Tempat Prakerin</span>
           </div>
-          <div class="flex justify-center">
-            <div class="w-full md:w-1/2 pt-4 md:pt-2">
+          <div class="flex flex-col md:flex-row justify-center gap-2">
+            <v-select
+              class="py-2 px-3 w-72 mx-auto md:mx-0"
+              :options="statusPerusahaan"
+              v-model="PencarianSettings.statusPerusahaan"
+              v-bind:class="{ disabled: false }"
+            ></v-select>
+            <div class="w-full md:w-72 pt-4 md:pt-2 mx-auto md:mx-0">
               <div class="relative">
                 <div
                   class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
@@ -125,7 +175,7 @@ const route = useRoute();
                 <input
                   type="search"
                   id="default-search"
-                  class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  class="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Cari ..."
                   required
                 />
@@ -142,54 +192,12 @@ const route = useRoute();
             <div class="grid sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-2 text-sm">
               <!-- <img src="@/assets/img/photo/company-1.jpg" alt="company-1.jpg" /> -->
 
-              <div class="" v-for="n in 10">
-                <div class="py-6">
-                  <div
-                    class="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden"
-                  >
-                    <div
-                      class="w-1/3 bg-cover"
-                      style="
-                        background-image: url('http://127.0.0.1:3000/img/photo/company-2.jpg');
-                      "
-                    ></div>
-                    <div class="w-2/3 p-4">
-                      <h1 class="text-gray-900 font-bold text-2xl">PT ABC Indonesia</h1>
-                      <p class="mt-2 text-gray-600 text-sm">
-                        Jl. Raya No 19 Kota Bandung - Jawa Barat - Indonesia - Telp:
-                        08512313
-                      </p>
-                      <div class="flex item-center mt-2">
-                        <svg
-                          class="w-5 h-5 fill-current text-sky-700"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"
-                          />
-                        </svg>
-                        <p class="text-sky-600">Tersedia</p>
-                        <svg
-                          class="w-5 h-5 fill-current text-gray-500"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"
-                          />
-                        </svg>
-                        <p>Tidak Tersedia</p>
-                      </div>
-                      <div class="flex item-center justify-between mt-3">
-                        <h1 class="text-gray-700 font-bold text-xl">1/5</h1>
-                        <button
-                          class="px-3 py-2 bg-sky-600 text-white text-xs font-bold uppercase rounded"
-                        >
-                          Pilih
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div v-for="n in 10">
+                <CardCompany
+                  title="Nama Tempat Prakerin"
+                  :tersedia="randomAngka()"
+                  :jmlTersedia="randomAngka()"
+                ></CardCompany>
               </div>
             </div>
           </div>

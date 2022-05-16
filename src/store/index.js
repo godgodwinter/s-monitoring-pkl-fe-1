@@ -44,6 +44,10 @@ export default createStore({
         'nomeridentitas' : '1',
         'hakakses' : 'User',
       },
+      tempatPklSelected: {
+        'nama' : '',
+        'id' : '',
+      },
     };
   },
   getters: {
@@ -63,6 +67,9 @@ export default createStore({
     },
     setDataAuth(state, value) {
       state.dataAuth = value;
+    },
+    seTempatPklSelected(state,value){
+      state.tempatPklSelected = value;
     },
   },
 

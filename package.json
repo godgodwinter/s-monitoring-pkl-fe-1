@@ -9,6 +9,7 @@
     "preview2": "vite preview --port 8088"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.6.1",
     "@vuepic/vue-datepicker": "^3.0.0",
     "@vueup/vue-quill": "^1.0.0-beta.8",
     "aos": "^2.3.4",

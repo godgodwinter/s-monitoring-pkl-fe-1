@@ -16,6 +16,7 @@ import SiswaDashboard from '../views/admin/Dashboard.vue'
 import MenuSiswaProfileIndex from '../views/admin/profile/Index.vue'
 //pendaftaranPkl
 import MenuSiswaPendaftaranPklIndex from '../views/admin/pendaftaranpkl/Index.vue'
+import MenuSiswaPendaftaranPklStepSatu from '../views/admin/pendaftaranpkl/StepSatu.vue'
 import MenuSiswaPendaftaranPklStepDua from '../views/admin/pendaftaranpkl/StepDua.vue'
 import MenuSiswaPendaftaranPklStepTiga from '../views/admin/pendaftaranpkl/StepTiga.vue'
 //absensi
@@ -88,6 +89,10 @@ const routes = [
         path: '/pages/siswa/pendaftaranpkl',
         name: 'MenuSiswaPendaftaranPkl',
         component: MenuSiswaPendaftaranPklIndex,
+      },{
+        path: '/pages/siswa/pendaftaranpkl/step1',
+        name: 'MenuSiswaPendaftaranPklStep1',
+        component: MenuSiswaPendaftaranPklStepSatu,
       },{
         path: '/pages/siswa/pendaftaranpkl/step2',
         name: 'MenuSiswaPendaftaranPklStep2',

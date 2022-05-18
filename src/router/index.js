@@ -24,6 +24,9 @@ import MenuSiswaAbsensiIndex from '../views/admin/absensi/Index.vue'
 //jurnal
 import MenuSiswaJurnalIndex from '../views/admin/jurnal/Index.vue'
 
+//cetak
+import MenuSiswaCetakTesting from '../views/admin/cetak/Testing.vue'
+
 const routes = [
   {
     path: '/',
@@ -110,7 +113,13 @@ const routes = [
         name: 'MenuSiswaJurnal',
         component: MenuSiswaJurnalIndex,
       },
+     
     ],
+  }, 
+  {
+    path: '/cetak/testing',
+    name: 'MenuSiswaCetakTesting',
+    component: MenuSiswaCetakTesting,
   },
   {
     path: '/:catchAll(.*)', redirect: '/404',

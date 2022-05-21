@@ -107,7 +107,25 @@ const doHapus = (index) => {
           </div>
           <div class="flex item-center justify-between mt-3">
             <h1 class="text-gray-700 font-bold text-xl">{{ props.jmlTersedia }}</h1>
-            <div v-if="type != 'preview'">
+            <div v-if="type == 'preview'">
+              <button
+                @click="doHapus(props.index)"
+                class="px-3 py-2 bg-red-400 text-gray-100 text-xs font-bold uppercase rounded"
+              >
+                Hapus
+              </button>
+            </div>
+
+            <div v-if="type == 'previewNoBtn'">
+              <!-- <button
+                @click="doHapus(props.index)"
+                class="px-3 py-2 bg-red-400 text-gray-100 text-xs font-bold uppercase rounded"
+              >
+                Hapus
+              </button> -->
+            </div>
+
+            <div v-else>
               <button
                 @click="doPilih(props.id, props.title, props.tersedia, props.jmlTersedia)"
                 class="px-3 py-2 bg-sky-600 text-white text-xs font-bold uppercase rounded"
@@ -121,14 +139,6 @@ const doHapus = (index) => {
                 v-else
               >
                 Pilih
-              </button>
-            </div>
-            <div v-else>
-              <button
-                @click="doHapus(props.index)"
-                class="px-3 py-2 bg-red-400 text-gray-100 text-xs font-bold uppercase rounded"
-              >
-                Hapus
               </button>
             </div>
           </div>

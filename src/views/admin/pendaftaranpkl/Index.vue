@@ -24,7 +24,10 @@ const getData = async () => {
     // console.log(response);
     // data.value = response.data;
     statusPendaftaran.value = response.data;
-    if (statusPendaftaran.value == `Proses Pengajuan Tempat PKL`) {
+    if (
+      statusPendaftaran.value == `Proses Pengajuan Tempat PKL` ||
+      statusPendaftaran.value == `Proses Penempatan PKL`
+    ) {
       router.push({ name: "MenuSiswaPendaftaranPklStep1" });
     }
 
@@ -43,6 +46,7 @@ const doDaftar = async () => {
       // nama: d.nama,
     });
     Toast.success("Info", response.data);
+    router.push({ name: "MenuSiswaPendaftaranPklStep1" });
   } catch (error) {
     Toast.danger("Warning", "Data gagal dimuat");
     console.error(error);

@@ -50,9 +50,31 @@ const doBatal = () => {
   dataTempatPklSelected.label = "";
   store.commit("seTempatPklSelected", dataTempatPklSelected);
 };
-const doSubmit = () => {
-  Toast.success("Info", "Data berhasil disimpan!");
-  router.push({ name: "MenuSiswaPendaftaranPklStep2" });
+
+const doStoreData = async () => {
+  let dataStore = {
+    tempatpkl: stateTempatPKlSelected.value,
+  };
+  try {
+    const response = await Api.post("siswa/pendaftaranpkl/pengajuanpkl/store", dataStore);
+    Toast.success("Success", "Data Berhasil ditambahkan!");
+
+    doClearLS();
+    router.push({ name: "MenuSiswaPendaftaranPkl" });
+    return response.data;
+  } catch (error) {
+    Toast.danger("Warning", "Data gagal ditambahkan!");
+    console.error(error);
+  }
+};
+// clearLocalStorage
+const doClearLS = async () => {
+  localStorage.setItem("dataTempatPklSelected", JSON.stringify([]));
+};
+
+const doSubmit = async () => {
+  doStoreData();
+  // router.push({ name: "MenuSiswaPendaftaranPklStep2" });
 };
 
 let statusPendaftaran = ref(null);
@@ -123,6 +145,25 @@ const getDataFromLocalStorage = async () => {
   store.commit("setTempatPklSelected", dataTempatPklSelectedLS.value);
 };
 getDataFromLocalStorage();
+
+// setItem Localstorage
+const dataPengajuanPKL = ref([]);
+// proses waiting penempatanTempatPKL
+const getPengajuanPkl = async () => {
+  try {
+    const response = await Api.get("siswa/pendaftaranpkl/pengajuanpkl/get");
+    dataPengajuanPKL.value = response.data
+      ? response.data.pendaftaranprakerin_pengajuansiswa
+      : [];
+    console.log(dataPengajuanPKL.value);
+    // data.value = response.data;
+    return response;
+  } catch (error) {
+    Toast.danger("Warning", "Data gagal dimuat");
+    console.error(error);
+  }
+};
+getPengajuanPkl();
 </script>
 <template>
   <div class="px-3 py-3" v-if="statusPendaftaran == null">
@@ -139,19 +180,23 @@ getDataFromLocalStorage();
       button-link="MenuSiswaPendaftaranPklStep1"
       :isButtonActive="false"
     />
+
     <div class="grid grid-cols-1 xl:grid-cols-2">
-      <CardCompany
-        title="Nama Tempat Prakerin 1"
-        tersedia="1"
-        jmlTersedia="4/5"
-        type="preview"
-      ></CardCompany>
-      <CardCompany
+      <div v-for="(item, index) in dataPengajuanPKL" :key="item.id">
+        <CardCompany
+          :title="item.tempatpkl.nama"
+          :alamat="item.tempatpkl.alamat"
+          tersedia="1"
+          jmlTersedia="1/1"
+          type="previewNoBtn"
+        ></CardCompany>
+      </div>
+      <!-- <CardCompany
         title="Nama Tempat Prakerin 2"
         tersedia="1"
         jmlTersedia="4/5"
         type="preview"
-      ></CardCompany>
+      ></CardCompany> -->
     </div>
   </div>
   <div class="px-3 py-3" v-else-if="statusPendaftaran == 'Proses Pengajuan Tempat PKL'">
@@ -247,7 +292,7 @@ getDataFromLocalStorage();
                   <button
                     class="h-10 px-6 font-semibold rounded-md bg-emerald-500 text-white"
                     type="submit"
-                    v-if="dataTempatPkl.label"
+                    v-if="stateTempatPKlSelected.length >= 2"
                     @click="doSubmit()"
                   >
                     Simpan dan Lanjutkan Proses

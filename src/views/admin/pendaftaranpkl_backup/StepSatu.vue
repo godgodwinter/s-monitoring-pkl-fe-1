@@ -1,5 +1,4 @@
 <script setup>
-import Loading from "../../../components/atoms/Loading1.vue";
 import CardStepPendaftaranVue from "../../../components/organismes/pendaftaranpkl/CardStepPendaftaran.vue";
 import CardCompany from "../../../components/atoms/CardCompanySatu.vue";
 import Button from "../../../components/atoms/ButtonTwo.vue";
@@ -54,84 +53,15 @@ const doSubmit = () => {
   Toast.success("Info", "Data berhasil disimpan!");
   router.push({ name: "MenuSiswaPendaftaranPklStep2" });
 };
-
-let statusPendaftaran = ref(null);
-let inputCari = ref("");
-let inputTersedia = ref({
-  label: "Tersedia",
-  id: "Tersedia",
-});
-let tempatPKLAsli = ref([]);
-let tempatPKL = ref([]);
-
-// 1. loadPilihanTempatPKL
-const getPilihanTempatPKL = async () => {
-  try {
-    const response = await Api.get(
-      `siswa/pendaftaranpkl/getdatatempatpkl?cari=${inputCari.value}&tersedia=${
-        inputTersedia.value ? inputTersedia.value.label : ""
-      }`
-    );
-    // data.value = response.data;
-    tempatPKLAsli.value = response.data;
-    tempatPKL.value = response.data;
-    // console.log(response.data);
-  } catch (error) {
-    Toast.danger("Warning", "Data gagal dimuat");
-    console.error(error);
-  }
-};
-getPilihanTempatPKL();
-// 2. load PengajuanTempatPklKu
-
-const getData = async () => {
-  try {
-    const response = await Api.get("siswa/profile/pendaftaranpkl");
-    // console.log(response);
-    // data.value = response.data;
-    statusPendaftaran.value = response.data;
-    if (statusPendaftaran.value == `Proses Pengajuan Tempat PKL`) {
-    } else if (statusPendaftaran.value == `Proses Penempatan PKL`) {
-    }
-
-    return response;
-  } catch (error) {
-    Toast.danger("Warning", "Data gagal dimuat");
-    console.error(error);
-  }
-};
-getData();
-// a.jika sudah ada maka tampikan menu menunggu dan informasi data pengajuan ku
-// b. jika belum maka dapat mengisi dan submit pengajuan tempat pkl
-
-const doCari = async () => {
-  getPilihanTempatPKL();
-};
-
-const stateTempatPKlSelected = computed(function () {
-  return store.state.tempatPklSelected;
-});
-const dataTempatPklSelectedLS = ref([]);
-// getDataFromLocalStorage
-const getDataFromLocalStorage = async () => {
-  let datas = localStorage.getItem("dataTempatPklSelected");
-  if (datas) {
-    dataTempatPklSelectedLS.value = JSON.parse(datas);
-  } else {
-    dataTempatPklSelectedLS.value = [];
-  }
-  store.commit("setTempatPklSelected", dataTempatPklSelectedLS.value);
-};
-getDataFromLocalStorage();
 </script>
 <template>
-  <div class="px-3 py-3" v-if="statusPendaftaran == null">
-    <div>
-      <Loading />
+  <div class="px-3 py-3">
+    <div class="w-full bg-white py-4 px-4 rounded-lg shadow-sm">
+      <h3 class="font-bold text-lg">Memeriksa Data . . .</h3>
     </div>
   </div>
 
-  <div class="px-3 py-3" v-else-if="statusPendaftaran == 'Proses Penempatan PKL'">
+  <div class="px-3 py-3">
     <CardPemberitahuan
       title="Anda Sudah Mengisi Data Pengajuan Tempat PKL!"
       ket="Tunggu Proses Penempatan Tempat PKL oleh admin!"
@@ -139,6 +69,7 @@ getDataFromLocalStorage();
       button-link="MenuSiswaPendaftaranPklStep1"
       :isButtonActive="false"
     />
+
     <div class="grid grid-cols-1 xl:grid-cols-2">
       <CardCompany
         title="Nama Tempat Prakerin 1"
@@ -154,7 +85,7 @@ getDataFromLocalStorage();
       ></CardCompany>
     </div>
   </div>
-  <div class="px-3 py-3" v-else-if="statusPendaftaran == 'Proses Pengajuan Tempat PKL'">
+  <div class="px-3 py-3">
     <CardStepPendaftaranVue />
 
     <div class="pt-2">
@@ -221,24 +152,22 @@ getDataFromLocalStorage();
               </div>
             </div>
             <div class="grid grid-cols-1 xl:grid-cols-2">
-              <div v-for="(item, index) in stateTempatPKlSelected" :key="item.id">
-                <CardCompany
-                  :index="index"
-                  :title="item.title"
-                  :alamat="item.alamat"
-                  :tersedia="item.tersedia"
-                  :jmlTersedia="item.jmlTersedia"
-                  type="preview"
-                ></CardCompany>
-              </div>
-              <!-- <div v-if="dataTempatPkl.label">
+              <div v-if="dataTempatPkl.label">
                 <CardCompany
                   title="Nama Tempat Prakerin"
                   tersedia="1"
                   jmlTersedia="4/5"
                   type="preview"
                 ></CardCompany>
-              </div> -->
+              </div>
+              <div v-if="dataTempatPkl.label">
+                <CardCompany
+                  title="Nama Tempat Prakerin"
+                  tersedia="1"
+                  jmlTersedia="4/5"
+                  type="preview"
+                ></CardCompany>
+              </div>
             </div>
 
             <div class="flex justify-end py-4 px-4">
@@ -300,76 +229,22 @@ getDataFromLocalStorage();
             <v-select
               class="py-2 px-3 w-72 mx-auto md:mx-0"
               :options="statusPerusahaan"
-              v-model="inputTersedia"
+              v-model="PencarianSettings.statusPerusahaan"
               v-bind:class="{ disabled: false }"
             ></v-select>
-            <!-- <InputCari v-model="inputCari"></InputCari> -->
-            <div>
-              <div class="w-full md:w-72 pt-4 md:pt-2 mx-auto md:mx-0">
-                <div class="relative">
-                  <div
-                    class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-                  >
-                    <svg
-                      class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      ></path>
-                    </svg>
-                  </div>
-                  <input
-                    v-model="inputCari"
-                    @keyup="doCari()"
-                    type="search"
-                    class="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Cari ..."
-                    required
-                  />
-                  <!-- <button
-                    type="submit"
-                    class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    Pencarian
-                  </button> -->
-                </div>
-              </div>
-            </div>
-            <button
-              type="submit"
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              @click="doCari()"
-            >
-              Pencarian
-            </button>
+            <InputCari></InputCari>
           </div>
           <div class="text-gray-700">
             <div class="grid sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-2 text-sm">
               <!-- <img src="@/assets/img/photo/company-1.jpg" alt="company-1.jpg" /> -->
 
-              <div v-for="(item, index) in tempatPKL" :key="item.id">
-                <CardCompany
-                  :id="item.id"
-                  :title="item.nama"
-                  :alamat="item.alamat"
-                  :tersedia="item.tersedia"
-                  :jmlTersedia="item.terisi + '/' + item.kuota"
-                ></CardCompany>
-              </div>
-              <!-- <div v-for="n in 10">
+              <div v-for="n in 10">
                 <CardCompany
                   title="Nama Tempat Prakerin"
                   :tersedia="randomAngka()"
                   :jmlTersedia="randomAngka()"
                 ></CardCompany>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>

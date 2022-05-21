@@ -1,5 +1,4 @@
 <script setup>
-import Loading from "../../../components/atoms/Loading1.vue";
 import CardStepPendaftaranVue from "../../../components/organismes/pendaftaranpkl/CardStepPendaftaran.vue";
 import CardCompany from "../../../components/atoms/CardCompanySatu.vue";
 import Api from "@/axios/axios.js";

@@ -1,9 +1,11 @@
 <script setup>
+import { ref } from "vue";
 import { reactive, computed } from "vue";
 import Toast from "../lib/Toast";
 import { useStore } from "vuex";
 const store = useStore();
 const props = defineProps({
+  index: { type: String, required: false, default: 0 },
   id: { type: String, required: false, default: 0 },
   title: { type: String, required: false, default: "Nama Perusahaan" },
   alamat: { type: String, required: false, default: "Alamat Perusahaan" },
@@ -11,19 +13,60 @@ const props = defineProps({
   tersedia: { type: String, required: false, default: 0 },
   type: { type: String, required: false, default: "pilihan" }, // preview, pilihan
 });
-
 const doKetTidakTersedia = () => {
   dataTempatPkl.id = "";
   dataTempatPkl.label = "";
   store.commit("seTempatPklSelected", dataTempatPkl);
   Toast.danger("Warning", "Perusahaan tidak tersedia!");
 };
+// console.log(dataTempatPklSelected.value.length);
+
+const stateTempatPKlSelected = computed(function () {
+  return store.state.tempatPklSelected;
+});
+const dataTempatPklSelectedLS = ref(stateTempatPKlSelected.value);
+
 let dataTempatPkl = { id: "", label: "" };
-const doPilih = (id, label) => {
-  dataTempatPkl.id = id;
-  dataTempatPkl.label = label;
-  store.commit("seTempatPklSelected", dataTempatPkl);
-  Toast.success("Info", " Perusahaan berhasil dipilih!");
+const doPilih = (id, label, tersedia, jmlTersedia) => {
+  if (stateTempatPKlSelected.value.length < 2) {
+    // filter where id
+    let countFiltered = dataTempatPklSelectedLS.value.filter(function (element) {
+      return element.id == props.id;
+    }).length;
+    console.log(countFiltered);
+    if (countFiltered < 1) {
+      dataTempatPkl.id = id;
+      dataTempatPkl.title = props.title;
+      dataTempatPkl.alamat = props.alamat;
+      dataTempatPkl.tersedia = tersedia;
+      dataTempatPkl.jmlTersedia = jmlTersedia;
+      dataTempatPklSelectedLS.value.push(dataTempatPkl);
+      localStorage.setItem(
+        "dataTempatPklSelected",
+        JSON.stringify(dataTempatPklSelectedLS.value)
+      );
+      store.commit("setTempatPklSelected", dataTempatPklSelectedLS.value);
+      Toast.success("Info", " Perusahaan berhasil dipilih!");
+    } else {
+      Toast.danger("Info", "Gagal, Data Sudah pernah di pilih!");
+    }
+  } else {
+    Toast.danger(
+      "Info",
+      "Sudah memilih 2 tempat, Hapus Terlebih dahulu untuk dapat memilih lagi!"
+    );
+  }
+};
+
+const doHapus = (index) => {
+  dataTempatPklSelectedLS.value.splice(index, 1);
+  console.log(dataTempatPklSelectedLS.value, index);
+  localStorage.setItem(
+    "dataTempatPklSelected",
+    JSON.stringify(dataTempatPklSelectedLS.value)
+  );
+  store.commit("setTempatPklSelected", dataTempatPklSelectedLS.value);
+  Toast.warning("Info", " Perusahaan berhasil dibatalkan!");
 };
 </script>
 <template>
@@ -66,7 +109,7 @@ const doPilih = (id, label) => {
             <h1 class="text-gray-700 font-bold text-xl">{{ props.jmlTersedia }}</h1>
             <div v-if="type != 'preview'">
               <button
-                @click="doPilih(props.id, props.title)"
+                @click="doPilih(props.id, props.title, props.tersedia, props.jmlTersedia)"
                 class="px-3 py-2 bg-sky-600 text-white text-xs font-bold uppercase rounded"
                 v-if="tersedia > 0"
               >
@@ -78,6 +121,14 @@ const doPilih = (id, label) => {
                 v-else
               >
                 Pilih
+              </button>
+            </div>
+            <div v-else>
+              <button
+                @click="doHapus(props.index)"
+                class="px-3 py-2 bg-red-400 text-gray-100 text-xs font-bold uppercase rounded"
+              >
+                Hapus
               </button>
             </div>
           </div>

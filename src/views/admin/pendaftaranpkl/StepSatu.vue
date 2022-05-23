@@ -97,7 +97,7 @@ const getPilihanTempatPKL = async () => {
     // data.value = response.data;
     tempatPKLAsli.value = response.data;
     tempatPKL.value = response.data;
-    // console.log(response.data);
+    console.log(response.data);
   } catch (error) {
     Toast.danger("Warning", "Data gagal dimuat");
     console.error(error);

@@ -116,7 +116,7 @@ const doHapus = (index) => {
               </button>
             </div>
 
-            <div v-if="type == 'previewNoBtn'">
+            <div v-else-if="type == 'previewNoBtn'">
               <!-- <button
                 @click="doHapus(props.index)"
                 class="px-3 py-2 bg-red-400 text-gray-100 text-xs font-bold uppercase rounded"

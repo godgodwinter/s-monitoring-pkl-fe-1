@@ -39,7 +39,7 @@ const columns = [
         <li class="step step-primary">Daftar</li>
         <li class="step step-primary">Pengajuan Tempat PKL</li>
         <li class="step step-primary">Menunggu Penempatan Tempat PKL</li>
-        <li class="step">
+        <li class="step step-secondary">
           <p data-tip="Proses Saat ini" class="tooltip tooltip-left">
             Pemberkasan
           </p>

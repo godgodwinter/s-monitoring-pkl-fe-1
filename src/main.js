@@ -10,12 +10,14 @@ import VueGoodTablePlugin from 'vue-good-table-next';
 import { QuillEditor } from '@vueup/vue-quill'
 import Datepicker from '@vuepic/vue-datepicker';
 import vSelect from 'vue-select'
-import store from './store';
 import router from './router';
-import vfmPlugin from 'vue-final-modal'
-import Popper from 'vue3-popper';
 
 // baru
+import { createPinia } from 'pinia'
+// deleted
+import vfmPlugin from 'vue-final-modal'
+import Popper from 'vue3-popper';
+import store from './store';
 
 // import the styles
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
@@ -39,7 +41,9 @@ app.use(vfmPlugin({
     componentName: 'VueFinalModal',
     dynamicContainerName: 'ModalsContainer'
   }))
-// baru
+  // baru
+  app.use(createPinia())
+  // deleted
 
 // calling component
 app.component('QuillEditor', QuillEditor)

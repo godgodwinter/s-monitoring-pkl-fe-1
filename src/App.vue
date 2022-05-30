@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" data-theme="cupcake" class="min-h-screen">
     <router-view />
   </div>
 </template>

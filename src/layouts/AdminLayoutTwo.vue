@@ -76,18 +76,18 @@ getData();
     <NavBar />
     <SideBar />
 
-    <div class="flex overflow-hidden bg-white pt-16">
+    <div class="flex overflow-hidden pt-16">
       <div
         class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10"
         id="sidebarBackdrop"
       />
       <div
         id="main-content"
-        class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-96"
+        class="w-full bg-base-200 min-h-screen relative overflow-y-auto lg:ml-96"
       >
         <main>
           <router-view />
-          <Footer />
+          <!-- <Footer /> -->
         </main>
       </div>
     </div>

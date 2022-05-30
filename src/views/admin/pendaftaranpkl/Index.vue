@@ -1,5 +1,6 @@
 <script setup>
 import CardStepPendaftaranVue from "../../../components/organismes/pendaftaranpkl/CardStepPendaftaran.vue";
+import CardProsesPemberkasan from "../../../components/organismes/pendaftaranpkl/CardProsesPemberkasan.vue";
 import CardCompany from "../../../components/atoms/CardCompanySatu.vue";
 import Loading from "../../../components/atoms/Loading1.vue";
 import Button from "../../../components/atoms/ButtonTwo.vue";
@@ -69,10 +70,17 @@ const doDaftar = async () => {
       >
         <template #body>
           <div class="py-3">
-            <Button title="Daftar Praktek Kerja Lapangan" @click="doDaftar()"></Button>
+            <Button
+              title="Daftar Praktek Kerja Lapangan"
+              @click="doDaftar()"
+            ></Button>
           </div>
         </template>
       </CardPemberitahuan>
+    </div>
+
+    <div v-else-if="statusPendaftaran == 'Proses Pemberkasan'">
+      <CardProsesPemberkasan></CardProsesPemberkasan>
     </div>
 
     <div v-else-if="statusPendaftaran == 'Disetujui'">
@@ -115,13 +123,17 @@ const doDaftar = async () => {
                     alt="Neil Sims avatar"
                   />
                   <div class="text-sm font-normal text-gray-500">
-                    <div class="text-base font-semibold text-gray-900">Neil Sims</div>
+                    <div class="text-base font-semibold text-gray-900">
+                      Neil Sims
+                    </div>
                     <div class="text-sm font-normal text-gray-500">
                       <p>1234</p>
                     </div>
                   </div>
                 </td>
-                <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                <td
+                  class="p-4 whitespace-nowrap text-base font-medium text-gray-900"
+                >
                   X TSM 1
                 </td>
 

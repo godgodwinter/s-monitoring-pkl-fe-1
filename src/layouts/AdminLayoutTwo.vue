@@ -32,6 +32,7 @@ isLogin();
 
 const data = ref("");
 const dataAuth = ref({
+  id: "0",
   name: "Nama User",
   nomeridentitas: "1",
   hakakses: "User",
@@ -48,6 +49,7 @@ const getData = async () => {
       dk = `${response.dataAuth.kelasdetail.kelas.tingkatan} ${response.dataAuth.kelasdetail.kelas.jurusan} ${response.dataAuth.kelasdetail.kelas.suffix}`;
     }
     dataAuth.value = {
+      id: response.dataAuth.id,
       nama: response.dataAuth.nama,
       nomeridentitas: response.dataAuth.nomeridentitas,
       kelas: dk,

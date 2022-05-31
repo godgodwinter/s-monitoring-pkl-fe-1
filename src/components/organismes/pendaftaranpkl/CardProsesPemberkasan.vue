@@ -1,5 +1,17 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter, useRoute } from "vue-router";
+import Api from "@/axios/axios";
+
+const store = useStore();
+const router = useRouter();
+
+const isSideBarActive = computed(() => store.state.isSideBarActive);
+const getDataSettings = computed(() => store.state.dataSettings);
+const getDataAuth = computed(() => store.state.dataAuth);
+
+// console.log(getDataAuth.value.id);
 const data = ref([]);
 const columns = [
   {
@@ -28,6 +40,27 @@ const columns = [
     type: "String",
   },
 ];
+const siswa_id = getDataAuth.value.id;
+const dataTempatPkl = ref([]);
+const dataSiswa = ref([]);
+const dataAnggota = ref();
+// idsekolah
+const getData = async () => {
+  try {
+    const response = await Api.get(`siswa/profile/pendaftaranpkl`);
+    dataTempatPkl.value = response.tempatpkl;
+    data.value = response.anggota;
+    // console.log(dataSiswa.value);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+getData();
+const doDelSiswa = (index) => {
+  data.value.splice(index, 1);
+  setSiswa(data.value);
+};
 </script>
 <template>
   <div class="py-2">
@@ -61,10 +94,10 @@ const columns = [
           </figure>
           <div class="card-body">
             <h2 class="card-title">
-              aaa
+              {{ dataTempatPkl.nama }}
               <!-- <div class="badge badge-secondary">NEW</div> -->
             </h2>
-            <p>bbb</p>
+            <p>{{ dataTempatPkl.alamat }}</p>
             <div class="card-actions justify-end">
               <div class="badge badge-outline">Tersedia</div>
               <div class="badge badge-outline">Tidak Tersedia</div>

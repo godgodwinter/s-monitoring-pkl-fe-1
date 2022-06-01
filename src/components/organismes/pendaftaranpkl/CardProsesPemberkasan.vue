@@ -114,12 +114,22 @@ const doDelSiswa = (index) => {
           <label for="my-modal-4" class="btn modal-button">Upload Berkas</label>
 
           <!-- The button to open modal -->
-          <button class="btn btn-primary btn-primary-content">
-            Download Surat Permohonan
-          </button>
-          <button class="btn btn-primary btn-primary-content">
-            Download Surat Persetujuan
-          </button>
+          <router-link
+            :to="{ name: 'MenuSiswaPendaftaranPklCetakPermohonan' }"
+            target="_blank"
+          >
+            <button class="btn btn-primary btn-primary-content">
+              Download Surat Permohonan
+            </button></router-link
+          >
+          <router-link
+            :to="{ name: 'MenuSiswaPendaftaranPklCetakPersetujuan' }"
+            target="_blank"
+          >
+            <button class="btn btn-primary btn-primary-content">
+              Download Surat Persetujuan
+            </button>
+          </router-link>
         </div>
         <div class="w-full py-2 px-6 mx-auto">
           <div>

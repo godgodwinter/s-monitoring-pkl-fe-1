@@ -16,6 +16,8 @@ import SiswaDashboard from '../views/admin/Dashboard.vue'
 import MenuSiswaProfileIndex from '../views/admin/profile/Index.vue'
 //pendaftaranPkl
 import MenuSiswaPendaftaranPklIndex from '../views/admin/pendaftaranpkl/Index.vue'
+import MenuSiswaPendaftaranPklCetakPermohonan from '../views/admin/pendaftaranpkl/CetakSuratPermohonan.vue'
+import MenuSiswaPendaftaranPklCetakPersetujuan from '../views/admin/pendaftaranpkl/CetakSuratPersetujuan.vue'
 import MenuSiswaPendaftaranPklStepSatu from '../views/admin/pendaftaranpkl/StepSatu.vue'
 import MenuSiswaPendaftaranPklStepDua from '../views/admin/pendaftaranpkl/StepDua.vue'
 import MenuSiswaPendaftaranPklStepTiga from '../views/admin/pendaftaranpkl/StepTiga.vue'
@@ -88,11 +90,23 @@ const routes = [
         path: '/pages/siswa/profile',
         name: 'MenuSiswaProfile',
         component: MenuSiswaProfileIndex,
-      },{
+      },
+      {
         path: '/pages/siswa/pendaftaranpkl',
         name: 'MenuSiswaPendaftaranPkl',
         component: MenuSiswaPendaftaranPklIndex,
-      },{
+      },
+      {
+        path: '/pages/siswa/datapendaftaranpkl/cetak/suratpermohonan',
+        name: 'MenuSiswaPendaftaranPklCetakPermohonan',
+        component: MenuSiswaPendaftaranPklCetakPermohonan,
+      },
+      {
+        path: '/pages/siswa/datapendaftaranpkl/cetak/suratpersetujuan',
+        name: 'MenuSiswaPendaftaranPklCetakPersetujuan',
+        component: MenuSiswaPendaftaranPklCetakPersetujuan,
+      },
+      {
         path: '/pages/siswa/pendaftaranpkl/step1',
         name: 'MenuSiswaPendaftaranPklStep1',
         component: MenuSiswaPendaftaranPklStepSatu,

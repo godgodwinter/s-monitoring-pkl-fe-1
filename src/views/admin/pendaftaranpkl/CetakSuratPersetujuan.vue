@@ -64,7 +64,7 @@ margins.left, // x coord
         10, //bottom y coord
       ],
       callback: function (doc) {
-        // doc.save();
+        doc.save();
         //   doc.output("save", "filename.pdf"); //Try to save PDF as a file (not works on ie before 10, and some mobile devices)
         // doc.output("datauristring"); //returns the data uri string
         // doc.output("datauri"); //opens the data uri in current window
@@ -86,7 +86,7 @@ margins.left, // x coord
   <div v-if="data" class="flex justify-center">
     <div ref="testHtml" data-theme="light" class="">
       <div class="max-w-xl bg-white text-sm">
-        <div class="px-4 py-4">
+        <div class="px-4 py-0">
           <img src="@/assets/img/cetak/kop_mentah.png" alt="" />
         </div>
 
@@ -96,7 +96,7 @@ margins.left, // x coord
           </div>
         </div>
 
-        <div class="px-6">
+        <div class="px-6 py-4">
           <div class="text-xs">
             <p class="indent-0">Surat persetujuan ini menyatakan bahwa :</p>
           </div>

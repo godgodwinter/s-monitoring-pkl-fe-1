@@ -10,13 +10,10 @@
                   <tr>
                     <th scope="col" class="p-4">
                       <div class="flex items-center">
-                        <input
-                          id="checkbox-all"
-                          aria-describedby="checkbox-1"
-                          type="checkbox"
-                          class="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded"
-                        />
-                        <label for="checkbox-all" class="sr-only">checkbox</label>
+                        <label
+                          class="text-left text-xs font-medium text-gray-500 uppercase"
+                          >No</label
+                        >
                       </div>
                     </th>
                     <th
@@ -29,10 +26,14 @@
                       scope="col"
                       class="p-4 text-left text-xs font-medium text-gray-500 uppercase"
                     >
+                      Kelas
+                    </th>
+                    <th
+                      scope="col"
+                      class="p-4 text-left text-xs font-medium text-gray-500 uppercase"
+                    >
                       JURUSAN
                     </th>
-
-                    <th scope="col" class="p-4"></th>
                   </tr>
                 </slot>
               </thead>
@@ -59,13 +60,17 @@
                         alt="Neil Sims avatar"
                       />
                       <div class="text-sm font-normal text-gray-500">
-                        <div class="text-base font-semibold text-gray-900">Neil Sims</div>
+                        <div class="text-base font-semibold text-gray-900">
+                          Neil Sims
+                        </div>
                         <div class="text-sm font-normal text-gray-500">
                           <p>1231</p>
                         </div>
                       </div>
                     </td>
-                    <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                    <td
+                      class="p-4 whitespace-nowrap text-base font-medium text-gray-900"
+                    >
                       X TSM 1
                     </td>
 

@@ -111,7 +111,8 @@ const doSubmitFile = async () => {
   <div class="py-2">
     <div class="card bg-base-100 py-2 shadow shadow-sm">
       <article class="prose py-4 px-10">
-        <h1>Proses Pemberkasan</h1>
+        <h1 v-if="fileBerkas">Proses Persetujuan</h1>
+        <h1 v-else>Proses Pemberkasan</h1>
       </article>
       <ul class="steps steps-vertical lg:steps-horizontal py-4">
         <li class="step step-primary">Daftar</li>
@@ -148,10 +149,11 @@ const doSubmitFile = async () => {
       <div class="w-full 2xl:w-4/12 py-6 md:px-6">
         <div class="card w-8/12 bg-base-100 shadow-xl mx-auto">
           <figure>
-            <img
+            <img src="@/assets/img/photo/company-1.jpg" alt="Shoes" />
+            <!-- <img
               src="https://api.lorem.space/image/shoes?w=400&h=225"
               alt="Shoes"
-            />
+            /> -->
           </figure>
           <div class="card-body">
             <h2 class="card-title">

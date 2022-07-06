@@ -1,10 +1,11 @@
 <script setup>
+import fnValidasi from "@/components/lib/babengValidasi";
 import Loading from "@/components/atoms/Loading1.vue";
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
 moment.updateLocale("id", localization);
 import Api from "@/axios/axios.js";
-
+import { Field, Form } from "vee-validate";
 import Button from "@/components/atoms/ButtonTwo.vue";
 import { ref } from "vue";
 import Toast from "@/components/lib/Toast";
@@ -81,6 +82,35 @@ const getData = async () => {
 };
 
 getData();
+
+const dataForm = ref({
+  label: "Hadir",
+  bukti: null,
+  alasan: "",
+});
+
+const dataFormJurnal = ref({
+  label: "",
+  file: null,
+  alasan: "",
+});
+
+const onSubmitAbsensi = (values) => {
+  console.log(values);
+  Toast.babeng("Info", "Submit absensi");
+};
+const onSubmitJurnal = (values) => {
+  console.log(values);
+  Toast.babeng("Info", "Submit Jurnal");
+};
+
+const onBatalkan = () => {
+  Toast.babeng("Info", "Submit Batalkan ");
+};
+
+const getDataAbsensi = async () => {
+  console.log("get Data absensi");
+};
 </script>
 <template>
   <div v-if="statusPendaftaran == null">
@@ -158,14 +188,90 @@ getData();
                     class="modal-toggle"
                   />
                   <label for="my-modal-absen" class="modal cursor-pointer">
-                    <label class="modal-box relative" for="">
-                      <h3 class="text-lg font-bold">
-                        Congratulations random Internet user!
+                    <label class="modal-box w-11/12 max-w-5xl relative" for="">
+                      <h3 class="text-lg font-bold text-center">
+                        Kehadiran tanggal {{ today }}
                       </h3>
-                      <p class="py-4">
-                        You've been selected for a chance to get one year of
-                        subscription to use Wikipedia for free!
-                      </p>
+
+                      <Form v-slot="{ errors }" @submit="onSubmitAbsensi">
+                        <div class="px-10">
+                          <div
+                            class="py-4 space-x-2 space-y-2 flex flex-wrap w-full justify-center"
+                          >
+                            <div class="w-1/3 py-2">
+                              <Field
+                                :rules="fnValidasi.validateData2"
+                                v-model="dataForm.label"
+                                name="label"
+                                class="select select-bordered w-11/12"
+                                as="select"
+                              >
+                                <option disabled selected>Pilih ?</option>
+                                <option value="Hadir">Hadir</option>
+                                <option value="Ijin">Ijin</option>
+                                <option value="Sakit">Sakit</option>
+                              </Field>
+
+                              <div class="text-xs text-red-600 mt-1">
+                                {{ errors.label }}
+                              </div>
+                            </div>
+                            <div
+                              class="w-1/3"
+                              v-if="dataForm.label && dataForm.label != 'Hadir'"
+                            >
+                              <label for="file" class
+                                >Bukti :
+                                <code class="text-red-600 text-sm">
+                                  *) .jpg/.pdf/.doc/.docx
+                                </code></label
+                              >
+                              <Field
+                                v-model="dataForm.bukti"
+                                name="bukti"
+                                v-slot="{ handleChange, handleBlur }"
+                              >
+                                <input
+                                  :rules="fnValidasi.validateData2"
+                                  type="file"
+                                  @change="handleChange"
+                                  @blur="handleBlur"
+                                />
+                              </Field>
+                              <div class="text-xs text-red-600 mt-1">
+                                {{ errors.bukti }}
+                              </div>
+                            </div>
+                            <div
+                              class="w-2/3"
+                              v-if="dataForm.label && dataForm.label != 'Hadir'"
+                            >
+                              <label for="file" class>Catatan : </label>
+
+                              <Field
+                                :rules="fnValidasi.validateData2"
+                                v-model="dataForm.alasan"
+                                v-slot="{ field }"
+                                name="alasan"
+                                type="text"
+                                class="input input-bordered w-11/12"
+                              >
+                                <textarea
+                                  v-bind="field"
+                                  class="textarea textarea-bordered w-11/12 h-24"
+                                  placeholder="Catatan"
+                                ></textarea>
+                              </Field>
+                              <div class="text-xs text-red-600 mt-1">
+                                {{ errors.alasan }}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="w-full flex justify-end">
+                            <button class="btn btn-primary">Simpan</button>
+                          </div>
+                        </div>
+                      </Form>
                     </label>
                   </label>
                 </div>
@@ -199,14 +305,78 @@ getData();
                     class="modal-toggle"
                   />
                   <label for="my-modal-jurnal" class="modal cursor-pointer">
-                    <label class="modal-box relative" for="">
-                      <h3 class="text-lg font-bold">
-                        Congratulations random Internet user! Isi Jurnal
+                    <label class="modal-box w-11/12 max-w-5xl relative" for="">
+                      <h3 class="text-lg font-bold text-center">
+                        Jurnal tanggal {{ today }}
                       </h3>
-                      <p class="py-4">
-                        You've been selected for a chance to get one year of
-                        subscription to use Wikipedia for free!
-                      </p>
+                      <Form v-slot="{ errors }" @submit="onSubmitJurnal">
+                        <div class="px-10">
+                          <div
+                            class="py-4 space-x-2 space-y-2 flex flex-wrap w-full justify-center"
+                          >
+                            <div class="w-1/3 py-2">
+                              <label for="file" class>Judul : </label>
+                              <Field
+                                :rules="fnValidasi.validateData2"
+                                v-model="dataFormJurnal.label"
+                                name="label"
+                                type="text"
+                                class="input input-bordered w-11/12"
+                              />
+
+                              <div class="text-xs text-red-600 mt-1">
+                                {{ errors.label }}
+                              </div>
+                            </div>
+                            <div class="w-1/3">
+                              <label for="file" class
+                                >File :
+                                <code class="text-red-600 text-sm">
+                                  *) .jpg/.pdf/.doc/.docx
+                                </code></label
+                              >
+                              <Field
+                                v-model="dataFormJurnal.file"
+                                name="file"
+                                v-slot="{ handleChange, handleBlur }"
+                              >
+                                <input
+                                  :rules="fnValidasi.validateData2"
+                                  type="file"
+                                  @change="handleChange"
+                                  @blur="handleBlur"
+                                />
+                              </Field>
+                              <div class="text-xs text-red-600 mt-1">
+                                {{ errors.file }}
+                              </div>
+                            </div>
+                            <div class="w-2/3">
+                              <label for="file" class>Catatan : </label>
+                              <Field
+                                :rules="fnValidasi.validateData2"
+                                v-model="dataFormJurnal.alasan"
+                                v-slot="{ field }"
+                                name="alasan"
+                                type="text"
+                                class="input input-bordered w-11/12"
+                              >
+                                <textarea
+                                  v-bind="field"
+                                  class="textarea textarea-bordered w-11/12 h-24"
+                                  placeholder="Catatan"
+                                ></textarea>
+                              </Field>
+                              <div class="text-xs text-red-600 mt-1">
+                                {{ errors.alasan }}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="w-full flex justify-end">
+                            <button class="btn btn-primary">Simpan</button>
+                          </div>
+                        </div>
+                      </Form>
                     </label>
                   </label>
                 </div>
@@ -214,6 +384,7 @@ getData();
                   type="button"
                   data-modal-toggle="delete-user-modal"
                   class="btn btn-danger modal-button font-medium rounded-lg text-sm"
+                  @click="onBatalkan()"
                 >
                   <svg
                     class="mr-2 h-5 w-5"
@@ -366,73 +537,7 @@ getData();
                     </td>
 
                     <td class="p-4 whitespace-nowrap space-x-2">
-                      <div v-if="item.id == dateNow" class="space-x-2">
-                        <!-- <button
-                        @click="openModal"
-                        type="button"
-                        data-modal-toggle="user-modal"
-                        class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
-                      >
-                        <svg
-                          class="mr-2 h-5 w-5"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                          ></path>
-                          <path
-                            fill-rule="evenodd"
-                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                            clip-rule="evenodd"
-                          ></path>
-                        </svg>
-                        Absen
-                      </button>
-
-                      <button
-                        type="button"
-                        data-modal-toggle="user-modal"
-                        class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
-                      >
-                        <svg
-                          class="mr-2 h-5 w-5"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                          ></path>
-                          <path
-                            fill-rule="evenodd"
-                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                            clip-rule="evenodd"
-                          ></path>
-                        </svg>
-                        Isi Jurnal
-                      </button>
-                      <button
-                        type="button"
-                        data-modal-toggle="delete-user-modal"
-                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
-                      >
-                        <svg
-                          class="mr-2 h-5 w-5"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                            clip-rule="evenodd"
-                          ></path>
-                        </svg>
-                        Batalkan
-                      </button> -->
-                      </div>
+                      <div v-if="item.id == dateNow" class="space-x-2"></div>
                     </td>
                   </tr>
                 </tbody>

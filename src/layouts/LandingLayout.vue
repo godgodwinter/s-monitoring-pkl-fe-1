@@ -17,6 +17,19 @@ function scrollBehavior(to) {
   }
   return window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+const linkSiswa = import.meta.env.VITE_API_URLFE_SISWA
+  ? import.meta.env.VITE_API_URLFE_SISWA
+  : "http://localhost:3000/";
+const linkPembimbingLapangan = import.meta.env.VITE_API_URLFE_PEMBIMBINGLAPANGAN
+  ? import.meta.env.VITE_API_URLFE_PEMBIMBINGLAPANGAN
+  : "http://localhost:3000/";
+const linkPembimbingSekolah = import.meta.env.VITE_API_URLFE_PEMBIMBINGSEKOLAH
+  ? import.meta.env.VITE_API_URLFE_PEMBIMBINGSEKOLAH
+  : "http://localhost:3000/";
+const linkAdmin = import.meta.env.VITE_API_URLFE_ADMIN
+  ? import.meta.env.VITE_API_URLFE_ADMIN
+  : "http://localhost:3000/";
 </script>
 <template>
   <!-- aside sidebar -->
@@ -35,12 +48,16 @@ function scrollBehavior(to) {
       </router-link>
 
       <router-link :to="{ name: 'LandingPengawasLapangan' }">
-        <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Pembimbing Lapangan</h1>
+        <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">
+          Pembimbing Lapangan
+        </h1>
       </router-link>
       <router-link :to="{ name: 'LandingPengawasSekolah' }">
-        <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Pembimbing Sekolah</h1>
+        <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">
+          Pembimbing Sekolah
+        </h1>
       </router-link>
-      <a href="http://127.0.0.1:3004">
+      <a :href="linkAdmin">
         <h1 class="text-xs text-gray-800 font-bold py-2 pt-6">Administrator</h1>
       </a>
 
@@ -87,7 +104,10 @@ function scrollBehavior(to) {
     <div class="container max-w-4xl mx-auto font-serif">
       <div class="w-full">
         <div class="flex justify-between px-3 pt-2 pb-4">
-          <router-link :to="{ name: 'LandingIndex' }" class="flex px-2 py-0 w-2/5">
+          <router-link
+            :to="{ name: 'LandingIndex' }"
+            class="flex px-2 py-0 w-2/5"
+          >
             <img
               src="@/assets/img/logo/google-developers.svg"
               alt="icon"
@@ -123,7 +143,7 @@ function scrollBehavior(to) {
                   >Pembimbing Sekolah</router-link
                 >
                 <a
-                  href="http://127.0.0.1:3004"
+                  :href="linkAdmin"
                   class="text-gray-800 font-normal text-sm hover:text-sky-600 hover:underline"
                   >Administrator</a
                 >
@@ -131,7 +151,10 @@ function scrollBehavior(to) {
               </div>
             </div>
 
-            <span @click="sidebarToggle" class="text-gray-600 text-xl md:hidden block">
+            <span
+              @click="sidebarToggle"
+              class="text-gray-600 text-xl md:hidden block"
+            >
               <svg
                 v-if="!isSidebarActive"
                 xmlns="http://www.w3.org/2000/svg"

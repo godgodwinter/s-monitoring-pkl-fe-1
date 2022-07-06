@@ -97,7 +97,7 @@ const doDaftar = async () => {
         title="Proses Pendaftaran PKL Selesai!"
         ket="Jangan lupa untuk selalu mengisi Absensi dan jurnal!"
         buttonTitle="Pergi ke Menu Praktek Kerja Lapangan"
-        button-link="MenuSiswaPendaftaranPklStep1"
+        button-link="MenuSiswaAbsensi"
       />
 
       <div class="grid grid-cols-1 xl:grid-cols-2">

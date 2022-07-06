@@ -30,8 +30,12 @@ import ButtonOne from "../../components/atoms/ButtonOne.vue";
 
   <div class="container max-w-8xl mx-auto">
     <!-- Start Second Row -->
-    <div class="grid grid-cols-1 md:grid-cols-2 px-4 xl:p-0 gap-4 xl:gap-6 5 my-14">
-      <div class="bg-transparent p-6 rounded-xl border border-transparent pl-20 pt-10">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 px-4 xl:p-0 gap-4 xl:gap-6 5 my-14"
+    >
+      <div
+        class="bg-transparent p-6 rounded-xl border border-transparent pl-20 pt-10"
+      >
         <h1
           data-aos="zoom-in"
           data-aos-duration="2000"
@@ -44,8 +48,9 @@ import ButtonOne from "../../components/atoms/ButtonOne.vue";
           data-aos-duration="2000"
           class="text-gray-600 font-light mt-8 text-md"
         >
-          Simpler App remembers your important details, so you can fill carts, not forms.
-          And everything is encrypted so you can speed safely through checkout.
+          Simpler App remembers your important details, so you can fill carts,
+          not forms. And everything is encrypted so you can speed safely through
+          checkout.
         </p>
 
         <p
@@ -53,9 +58,9 @@ import ButtonOne from "../../components/atoms/ButtonOne.vue";
           data-aos-duration="2000"
           class="text-gray-600 font-light mt-8 text-md"
         >
-          Now, you can offset the carbon emissions produced by your deliveries—for free.
-          All you have to do is check out with Shop Pay, one of the first carbon-neutral
-          way to pay.
+          Now, you can offset the carbon emissions produced by your
+          deliveries—for free. All you have to do is check out with Shop Pay,
+          one of the first carbon-neutral way to pay.
         </p>
         <p
           data-aos="zoom-in"

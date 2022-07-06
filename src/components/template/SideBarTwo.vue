@@ -28,7 +28,9 @@ async function goLogout() {
     >
       <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
         <div class="flex-1 px-3 bg-white divide-y space-y-1">
-          <ul class="space-y-2 pb-2 lg:flex flex-wrap px-2 gap-2 justify-center">
+          <ul
+            class="space-y-2 pb-2 lg:flex flex-wrap px-2 gap-2 justify-center"
+          >
             <li class="bg-white lg:w-full">
               <div class="flex gap-2 items-center justify-center">
                 <img
@@ -73,7 +75,9 @@ async function goLogout() {
               </button>
             </li>
           </ul>
-          <ul class="space-y-2 pb-2 lg:flex flex-wrap px-2 gap-0 justify-between">
+          <ul
+            class="space-y-2 pb-2 lg:flex flex-wrap px-2 gap-0 justify-between"
+          >
             <li class="bg-white lg:w-1/2 py-2">
               <router-link
                 :to="{ name: 'MenuSiswaDashboard' }"
@@ -133,6 +137,26 @@ async function goLogout() {
             </li>
             <li class="bg-white lg:w-1/2">
               <router-link
+                :to="{ name: 'MenuSiswaDashboard' }"
+                class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span class="ml-3">PKL </span>
+              </router-link>
+            </li>
+            <li class="bg-white lg:w-1/2">
+              <router-link
                 :to="{ name: 'MenuSiswaAbsensi' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
               >
@@ -170,26 +194,6 @@ async function goLogout() {
                   />
                 </svg>
                 <span class="ml-3">Jurnal </span>
-              </router-link>
-            </li>
-            <li class="bg-white lg:w-1/2">
-              <router-link
-                :to="{ name: 'MenuSiswaDashboard' }"
-                class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="ml-3">PKL </span>
               </router-link>
             </li>
             <li class="bg-white lg:w-1/2">

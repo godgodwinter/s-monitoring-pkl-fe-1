@@ -1,4 +1,6 @@
 import Api from "@/axios/axios";
+import Toast from "@/components/lib/Toast";
+import { async } from "postcss-js";
 // import { useStoreDataProfile } from "@/stores/data/dataProfile";
 import { computed } from "vue";
 // const storeDataProfile = useStoreDataProfile();
@@ -17,6 +19,36 @@ const getData = async () => {
         console.error(error);
     }
 };
+
+const doAbsenStore = async (data) => {
+    try {
+        // console.log(data);
+        const response = await Api.post(`siswa/pkl/absen`, data);
+        let res = response.data;
+        if (response.success) {
+            Toast.success("Info", "Absen berhasil");
+            // console.log(response, res);
+            return true;
+        } else {
+            Toast.danger("Info", "Anda Sudah Absen!");
+            // console.log(response, res);
+            return false;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const doBatalkan = async (data) => {
+    try {
+        const response = await Api.post(`siswa/pkl/absen/batalkan`);
+        let res = response.data;
+        Toast.success("Info", "Absen dan Jurnal berhasil Dibatalkan");
+        return true;
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 // const doUpdate = async (data): Promise<boolean> => {
 //     let dataForm = {
@@ -49,6 +81,8 @@ const getData = async () => {
 
 const ApiAbsensi = {
     getData,
+    doAbsenStore,
+    doBatalkan
     // doUpdate
 };
 export default ApiAbsensi;

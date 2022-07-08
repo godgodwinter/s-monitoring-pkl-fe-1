@@ -99,13 +99,22 @@ const dataFormJurnal = ref({
   alasan: "",
 });
 
-const onSubmitAbsensi = (values) => {
-  console.log(values);
-  // dataForm
-  // label
-  // bukti
-  // alasan
-  Toast.babeng("Info", "Submit absensi");
+const onSubmitAbsensi = async (values) => {
+  let formData = new FormData();
+  // console.log(values);
+  if (values.label == "Hadir") {
+    formData.append("label", "Hadir");
+  } else {
+    formData.append("bukti", values.bukti[0]);
+    formData.append("alasan", values.alasan);
+    formData.append("label", values.label);
+  }
+  let resSubmitAbsensi = await ApiAbsensi.doAbsenStore(formData);
+  // console.log(resSubmitAbsensi);
+  // Toast.babeng("Info", "Submit absensi");
+  if (resSubmitAbsensi) {
+    getDataAbsensi();
+  }
 };
 const onSubmitJurnal = (values) => {
   console.log(values);
@@ -117,8 +126,12 @@ const onSubmitJurnal = (values) => {
   Toast.babeng("Info", "Submit Jurnal");
 };
 
-const onBatalkan = () => {
-  Toast.babeng("Info", "Submit Batalkan ");
+const onBatalkan = async () => {
+  let resBatalkan = await ApiAbsensi.doBatalkan();
+  if (resBatalkan) {
+    getDataAbsensi();
+  }
+  // Toast.babeng("Info", "Submit Batalkan ");
 };
 const dataAbsensi = ref([]);
 const getDataAbsensi = async () => {

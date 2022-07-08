@@ -4,13 +4,13 @@ import fnValidasi from "@/components/lib/babengValidasi";
 import Loading from "@/components/atoms/Loading1.vue";
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
-moment.updateLocale("id", localization);
 import Api from "@/axios/axios.js";
 import { Field, Form } from "vee-validate";
 import Button from "@/components/atoms/ButtonTwo.vue";
 import { ref } from "vue";
 import Toast from "@/components/lib/Toast";
 import { useRouter, useRoute } from "vue-router";
+moment.updateLocale("id", localization);
 const router = useRouter();
 const route = useRoute();
 const formatter = new Intl.DateTimeFormat("id", { month: "long" });
@@ -105,7 +105,7 @@ const onSubmitAbsensi = async (values) => {
   if (values.label == "Hadir") {
     formData.append("label", "Hadir");
   } else {
-    formData.append("bukti", values.bukti[0]);
+    formData.append("bukti", values.bukti ? values.bukti[0] : null);
     formData.append("alasan", values.alasan);
     formData.append("label", values.label);
   }
@@ -116,14 +116,26 @@ const onSubmitAbsensi = async (values) => {
     getDataAbsensi();
   }
 };
-const onSubmitJurnal = (values) => {
-  console.log(values);
+const onSubmitJurnal = async (values) => {
+  let formDataJurnal = new FormData();
+  // console.log(values);
+  formDataJurnal.append("label", "Hadir");
+  formDataJurnal.append("file", values.file ? values.file[0] : null);
+  formDataJurnal.append("alasan", values.alasan);
+  formDataJurnal.append("label", values.label);
+  let resSubmitAbsensi = await ApiAbsensi.doJurnalStore(formDataJurnal);
+  // console.log(resSubmitAbsensi);
+  // Toast.babeng("Info", "Submit absensi");
+  if (resSubmitAbsensi) {
+    getDataAbsensi();
+  }
+  // console.log(values);
   // dataFormJurnal
   // label
   // file
   // alasan
 
-  Toast.babeng("Info", "Submit Jurnal");
+  // Toast.babeng("Info", "Submit Jurnal");
 };
 
 const onBatalkan = async () => {
@@ -579,7 +591,7 @@ getDataAbsensi();
                 <input type="checkbox" :id="item.id" class="modal-toggle" />
                 <label :for="item.id" class="modal cursor-pointer">
                   <label class="modal-box relative" for="">
-                    <h3 class="text-lg font-bold">CATATAN : {{ item.id }}</h3>
+                    <h3 class="text-lg font-bold">CATATAN :</h3>
                     <p class="py-4">
                       {{ item.kehadiranCatatan }}
                     </p>

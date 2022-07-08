@@ -32,21 +32,21 @@ async function goLogout() {
             class="space-y-2 pb-2 lg:flex flex-wrap px-2 gap-2 justify-center"
           >
             <li class="bg-white lg:w-full">
-              <div class="flex gap-2 items-center justify-center">
+              <div class="flex gap-2 items-center justify-center flex-col">
                 <img
-                  src="@/assets/img/avatar/baemon-ava-2.jpg"
+                  src="@/assets/img/avatar/user.png"
                   alt=""
                   class="rounded-full w-20 h-20 object-cover"
                 />
-                <div>
+                <div class="text-center">
                   <p class="text-gray-500 text-md font-semibold">
                     {{ getDataAuth.nama }}
                   </p>
                   <p class="text-gray-500 text-sm font-medium">
-                    {{ getDataAuth.nomeridentitas }}
+                    NIS : {{ getDataAuth.nomeridentitas }}
                   </p>
                   <p class="text-gray-500 text-xs font-medium mt-2">
-                    {{ getDataAuth.kelas }}
+                    KELAS : {{ getDataAuth.kelas }}
                   </p>
                   <p class="text-gray-500 text-xs font-light mt-2">
                     {{ getDataAuth.hakakses }}

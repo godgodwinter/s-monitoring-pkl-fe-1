@@ -8,7 +8,7 @@ const getData = async () => {
         const response = await Api.get(`siswa/pkl/absen`);
         let res = response.data;
         // storeDataProfile.setData(res);
-        console.log(res);
+        // console.log(res);
 
         return res;
     } catch (error) {

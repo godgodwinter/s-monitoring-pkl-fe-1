@@ -149,7 +149,7 @@ const dataAbsensi = ref([]);
 const getDataAbsensi = async () => {
   dataAbsensi.value = await ApiAbsensi.getData();
   data.value = dataAbsensi.value;
-  console.log(dataAbsensi.value);
+  // console.log(dataAbsensi.value);
   // console.log("get Data absensi");
 };
 getDataAbsensi();
@@ -555,7 +555,14 @@ getDataAbsensi();
                       class="p-4 whitespace-nowrap text-base font-medium text-gray-900"
                     >
                       <div class="w-full flex gap-1">
-                        <div class="text-teal-600 pt-1">{{ item.jurnal }}</div>
+                        <div class="text-teal-600 pt-1">
+                          <label
+                            :for="'jurnal-' + item.id"
+                            class="shadow border-2 rounded-lg font-medium text-sm capitalize"
+                          >
+                            {{ item.jurnal }} - {{ item.jurnalStatus }}</label
+                          >
+                        </div>
                         <!-- <img
                           src="@/assets/img/flat/check-mark_2.png"
                           alt=""
@@ -591,9 +598,39 @@ getDataAbsensi();
                 <input type="checkbox" :id="item.id" class="modal-toggle" />
                 <label :for="item.id" class="modal cursor-pointer">
                   <label class="modal-box relative" for="">
-                    <h3 class="text-lg font-bold">CATATAN :</h3>
+                    <h3 class="text-lg font-bold">
+                      CATATAN :
+                      <a
+                        :href="item.kehadiranBukti"
+                        target="_blank"
+                        v-if="
+                          item.kehadiran != 'Hadir' && item.kehadiran != null
+                        "
+                      >
+                        <span class="btn btn-primary">Download </span></a
+                      >
+                    </h3>
                     <p class="py-4">
                       {{ item.kehadiranCatatan }}
+                    </p>
+                  </label>
+                </label>
+
+                <input
+                  type="checkbox"
+                  :id="'jurnal-' + item.id"
+                  class="modal-toggle"
+                />
+                <label :for="'jurnal-' + item.id" class="modal cursor-pointer">
+                  <label class="modal-box relative" for="">
+                    <h3 class="text-lg font-bold">
+                      DETAIL JURNAL :
+                      <a :href="item.jurnalFile" target="_blank">
+                        <span class="btn btn-primary">Download </span></a
+                      >
+                    </h3>
+                    <p class="py-4">
+                      {{ item.jurnalCatatan }}
                     </p>
                   </label>
                 </label>

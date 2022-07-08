@@ -1,4 +1,5 @@
 <script setup>
+import ApiAbsensi from "@/services/api/apiAbsensi.js";
 import fnValidasi from "@/components/lib/babengValidasi";
 import Loading from "@/components/atoms/Loading1.vue";
 import moment from "moment/min/moment-with-locales";
@@ -9,6 +10,9 @@ import { Field, Form } from "vee-validate";
 import Button from "@/components/atoms/ButtonTwo.vue";
 import { ref } from "vue";
 import Toast from "@/components/lib/Toast";
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
+const route = useRoute();
 const formatter = new Intl.DateTimeFormat("id", { month: "long" });
 let dt = new Date();
 let dateNow = dt.getDate();
@@ -26,28 +30,28 @@ let daysInMonth = new Date(year, month, 0).getDate();
 
 // table
 const data = ref([]);
-for (let i = 0; i < daysInMonth; i++) {
-  let tempData = {
-    id: i + 1,
-    libur: "ya",
-    tanggal: `${i + 1} ${monthLong} ${year}`,
-    kehadiran: "Hadir",
-    kehadiranCatatan: "-",
-    jurnal: "Ada",
-    jurnalCatatan: "-",
-    status: "Diverifikasi",
-    statusCatatan: "-",
-  };
-  if (i + 1 > parseInt(moment().format("Do"))) {
-    tempData.kehadiran = "-";
-    tempData.kehadiranCatatan = "Belum Absen";
-    tempData.jurnal = "-";
-    tempData.jurnalCatatan = "-";
-    tempData.status = "-";
-    tempData.statusCatatan = "-";
-  }
-  data.value.push(tempData);
-}
+// for (let i = 0; i < daysInMonth; i++) {
+//   let tempData = {
+//     id: i + 1,
+//     libur: "ya",
+//     tanggal: `${i + 1} ${monthLong} ${year}`,
+//     kehadiran: "Hadir",
+//     kehadiranCatatan: "-",
+//     jurnal: "Ada",
+//     jurnalCatatan: "-",
+//     status: "Diverifikasi",
+//     statusCatatan: "-",
+//   };
+//   if (i + 1 > parseInt(moment().format("Do"))) {
+//     tempData.kehadiran = "-";
+//     tempData.kehadiranCatatan = "Belum Absen";
+//     tempData.jurnal = "-";
+//     tempData.jurnalCatatan = "-";
+//     tempData.status = "-";
+//     tempData.statusCatatan = "-";
+//   }
+//   data.value.push(tempData);
+// }
 // console.log(data.value);
 const dataDetail = ref({
   monthyear: {
@@ -97,20 +101,33 @@ const dataFormJurnal = ref({
 
 const onSubmitAbsensi = (values) => {
   console.log(values);
+  // dataForm
+  // label
+  // bukti
+  // alasan
   Toast.babeng("Info", "Submit absensi");
 };
 const onSubmitJurnal = (values) => {
   console.log(values);
+  // dataFormJurnal
+  // label
+  // file
+  // alasan
+
   Toast.babeng("Info", "Submit Jurnal");
 };
 
 const onBatalkan = () => {
   Toast.babeng("Info", "Submit Batalkan ");
 };
-
+const dataAbsensi = ref([]);
 const getDataAbsensi = async () => {
-  console.log("get Data absensi");
+  dataAbsensi.value = await ApiAbsensi.getData();
+  data.value = dataAbsensi.value;
+  console.log(dataAbsensi.value);
+  // console.log("get Data absensi");
 };
+getDataAbsensi();
 </script>
 <template>
   <div v-if="statusPendaftaran == null">
@@ -440,7 +457,7 @@ const getDataAbsensi = async () => {
                       scope="col"
                       class="p-4 text-left text-xs font-medium text-gray-500 uppercase"
                     >
-                      Nama
+                      Tanggal
                     </th>
                     <th
                       scope="col"
@@ -489,7 +506,7 @@ const getDataAbsensi = async () => {
                     >
                       <div class="text-sm font-normal text-gray-500">
                         <div class="text-base font-semibold text-gray-800">
-                          {{ item.tanggal }}
+                          {{ moment(item.tanggal).format("DD MMMM YYYY") }}
                         </div>
                       </div>
                     </td>
@@ -501,9 +518,10 @@ const getDataAbsensi = async () => {
                           <!-- The button to open modal -->
                           <label
                             :for="item.id"
-                            class="shadow border-2 rounded-lg font-medium text-sm"
+                            class="shadow border-2 rounded-lg font-medium text-sm capitalize"
                           >
-                            {{ item.kehadiran }}</label
+                            {{ item.kehadiran }} -
+                            {{ item.kehadiranStatus }}</label
                           >
                         </div>
                       </div>

@@ -135,7 +135,7 @@ async function goLogout() {
                 <span class="ml-3">Daftar PKL </span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-1/2">
+            <!-- <li class="bg-white lg:w-1/2">
               <router-link
                 :to="{ name: 'MenuSiswaDashboard' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -154,8 +154,8 @@ async function goLogout() {
                 </svg>
                 <span class="ml-3">PKL </span>
               </router-link>
-            </li>
-            <li class="bg-white lg:w-1/2">
+            </li> -->
+            <li class="bg-white lg:w-2/2">
               <router-link
                 :to="{ name: 'MenuSiswaAbsensi' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -172,10 +172,10 @@ async function goLogout() {
                     clip-rule="evenodd"
                   />
                 </svg>
-                <span class="ml-3">Absensi </span>
+                <span class="ml-3">Absensi dan Jurnal</span>
               </router-link>
             </li>
-            <li class="bg-white lg:w-1/2">
+            <!-- <li class="bg-white lg:w-1/2">
               <router-link
                 :to="{ name: 'MenuSiswaJurnal' }"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
@@ -195,7 +195,7 @@ async function goLogout() {
                 </svg>
                 <span class="ml-3">Jurnal </span>
               </router-link>
-            </li>
+            </li> -->
             <li class="bg-white lg:w-1/2">
               <router-link
                 :to="{ name: 'MenuSiswaDashboard' }"

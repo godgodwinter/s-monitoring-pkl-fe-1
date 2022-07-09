@@ -146,13 +146,26 @@ const onBatalkan = async () => {
   // Toast.babeng("Info", "Submit Batalkan ");
 };
 const dataAbsensi = ref([]);
-const getDataAbsensi = async () => {
-  dataAbsensi.value = await ApiAbsensi.getData();
+const getDataAbsensi = async (blnthn) => {
+  // console.log(blnthn);
+  dataAbsensi.value = await ApiAbsensi.getData(blnthn);
   data.value = dataAbsensi.value;
   // console.log(dataAbsensi.value);
   // console.log("get Data absensi");
 };
 getDataAbsensi();
+
+const onChangeMonth = async () => {
+  let month = "01";
+  if (parseInt(dataDetail.value.monthyear.month) < 10) {
+    month = "0" + (parseInt(dataDetail.value.monthyear.month) + 1);
+  }
+  let dateTerpilih = dataDetail.value.monthyear.year + "-" + month;
+  let res = await getDataAbsensi(dateTerpilih);
+  // console.log("====================================");
+  console.log(dataDetail.value.monthyear);
+  // console.log("====================================");
+};
 </script>
 <template>
   <div v-if="statusPendaftaran == null">
@@ -184,7 +197,7 @@ getDataAbsensi();
           </h1>
           <div class="flex justify-center">
             <div>
-              <div class="py-2">
+              <div class="py-2 flex gap-2">
                 <Datepicker
                   format="yyyy/MM"
                   value-format="yyyy-MM"
@@ -198,6 +211,9 @@ getDataAbsensi();
                     </div>
                   </template>
                 </Datepicker>
+                <button class="btn btn-primary" @click="onChangeMonth">
+                  PILIH
+                </button>
               </div>
               <div class="space-x-2 space-y-2 flex justify-center flex-wrap">
                 <div class="pt-2">

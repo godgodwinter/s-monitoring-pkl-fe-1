@@ -3,12 +3,17 @@ import Toast from "@/components/lib/Toast";
 import { computed } from "vue";
 
 
-const getData = async () => {
+const getData = async (blnthn) => {
+    let data = '';
+    if (blnthn) {
+        data = `?blnthn=${blnthn}`;
+    }
+    // console.log(data);
     try {
-        const response = await Api.get(`siswa/pkl/absen`);
+        const response = await Api.get(`siswa/pkl/absen${data}`);
         let res = response.data;
         // storeDataProfile.setData(res);
-        // console.log(res);
+        console.log(response);
 
         return res;
     } catch (error) {

@@ -54,7 +54,7 @@ async function goLogout() {
                 </div>
               </div>
             </li>
-            <li class="bg-white lg:w-1/2">
+            <li class="bg-white lg:w-1/2 flex justify-center">
               <button
                 @click="goLogout()"
                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group border border-2"

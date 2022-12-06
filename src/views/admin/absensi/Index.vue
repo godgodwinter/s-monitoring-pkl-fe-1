@@ -141,9 +141,12 @@ const onSubmitJurnal = async (values) => {
 };
 
 const onBatalkan = async () => {
-  let resBatalkan = await ApiAbsensi.doBatalkan();
-  if (resBatalkan) {
-    getDataAbsensi();
+
+  if (confirm("Anda yakin ingin membatalkan kehadiran dan jurnal ?")) {
+    let resBatalkan = await ApiAbsensi.doBatalkan();
+    if (resBatalkan) {
+      getDataAbsensi();
+    }
   }
   // Toast.babeng("Info", "Submit Batalkan ");
 };

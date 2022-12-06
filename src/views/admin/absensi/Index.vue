@@ -102,12 +102,12 @@ const dataFormJurnal = ref({
 const onSubmitAbsensi = async (values) => {
   let formData = new FormData();
   // console.log(values);
-  if (values.label == "Hadir") {
+  if (inputKehadiran.value == "Hadir") {
     formData.append("label", "Hadir");
   } else {
     formData.append("bukti", values.bukti ? values.bukti[0] : null);
     formData.append("alasan", values.alasan);
-    formData.append("label", values.label);
+    formData.append("label", inputKehadiran.value);
   }
   let resSubmitAbsensi = await ApiAbsensi.doAbsenStore(formData);
   // console.log(resSubmitAbsensi);
@@ -116,12 +116,14 @@ const onSubmitAbsensi = async (values) => {
     getDataAbsensi();
   }
 };
+const inputKehadiran = ref("Hadir");
 const onSubmitJurnal = async (values) => {
   let formDataJurnal = new FormData();
   // console.log(values);
   formDataJurnal.append("label", "Hadir");
   formDataJurnal.append("file", values.file ? values.file[0] : null);
   formDataJurnal.append("alasan", values.alasan);
+  // formDataJurnal.append("label", inputKehadiran.value);
   formDataJurnal.append("label", values.label);
   let resSubmitAbsensi = await ApiAbsensi.doJurnalStore(formDataJurnal);
   // console.log(resSubmitAbsensi);
@@ -166,45 +168,67 @@ const onChangeMonth = async () => {
   console.log(dataDetail.value.monthyear);
   // console.log("====================================");
 };
+const waktuObj = { 'hour': 14, 'minute': 0, 'second': 0 };
+const waktuNow = ref(moment().format("HH:mm:ss"));
+const waktuBatas = ref(moment().set(waktuObj).format("HH:mm:ss"));
+// waktuBatas.value.set(waktuObj);
+const waktuTutup = ref(-1);
+const doTimer = async () => {
+  // setInterval(
+  //   doChageTimer()
+  //   , 1000)
+  setInterval(() => {
+    doChageTimer();
+
+  }, 1000)
+}
+doTimer();
+
+const doChageTimer = () => {
+  waktuNow.value = moment().format("HH:mm:ss")
+  let a = moment().set(waktuObj);
+  let b = moment();
+  let result = a.diff(b);
+  waktuTutup.value = result;
+  // console.log(a.diff(b));
+  // let a = moment(waktuBatas.value);
+  // let b = moment();
+  // let diff = a.diff(b);
+  // console.log(diff);
+  // console.log(moment().format("HH:mm:ss"))
+  // waktuTutup.value = waktuNow.value.diff(waktuBatas.value, 'minutes');
+}
 </script>
 <template>
   <div v-if="statusPendaftaran == null">
     <Loading />
   </div>
-  <div
-    v-else-if="statusPendaftaran == 'Belum Daftar'"
-    class="w-full bg-white py-4 px-4 rounded-lg shadow-sm flex justify-center text-gray700"
-  >
+  <div v-else-if="statusPendaftaran == 'Belum Daftar'"
+    class="w-full bg-white py-4 px-4 rounded-lg shadow-sm flex justify-center text-gray700">
     <div>
       <h3 class="font-bold text-md text-center">Anda Belum Daftar!</h3>
       <p class="text-center">Lakukan pendaftaran terlebih dahulu!</p>
       <router-link :to="{ name: 'MenuSiswaPendaftaranPkl' }">
         <div class="py-3">
-          <Button title="Daftar Praktek Kerja Lapangan"></Button></div
-      ></router-link>
+          <Button title="Daftar Praktek Kerja Lapangan"></Button>
+        </div>
+      </router-link>
     </div>
   </div>
   <div v-else-if="statusPendaftaran == 'Disetujui'">
     <div class="py-2 px-2">
-      <div
-        class="w-full bg-white shadow-sm py-4 rounded-sm px-4 flex justify-center"
-      >
+      <div class="w-full bg-white shadow-sm py-4 rounded-sm px-4 flex justify-center">
         <div class="py-2">
-          <h1
-            class="font-bold underline italic text-md text-gray-700 text-center"
-          >
-            Hari ini : {{ today }}
+          <h1 class="font-bold underline italic text-md text-gray-700 text-center">
+            Batas Absensi : {{ waktuBatas }} - Status : {{ waktuTutup >= 1 ? 'Buka' : 'Tutup' }} </h1>
+          <h1 class="font-bold underline italic text-md text-gray-700 text-center">
+            Hari ini : {{ today }} - {{ waktuNow }}
+            <!-- = {{ waktuTutup }} -->
           </h1>
           <div class="flex justify-center">
             <div>
               <div class="py-2 flex gap-2">
-                <Datepicker
-                  format="yyyy/MM"
-                  value-format="yyyy-MM"
-                  v-model="dataDetail.monthyear"
-                  monthPicker
-                  required
-                >
+                <Datepicker format="yyyy/MM" value-format="yyyy-MM" v-model="dataDetail.monthyear" monthPicker required>
                   <template #calendar-header="{ index, day }">
                     <div :class="index === 5 || index === 6 ? 'red-color' : ''">
                       {{ day }}
@@ -218,33 +242,23 @@ const onChangeMonth = async () => {
               <div class="space-x-2 space-y-2 flex justify-center flex-wrap">
                 <div class="pt-2">
                   <!-- The button to open modal -->
-                  <label
-                    for="my-modal-absen"
-                    class="btn btn-primary modal-button font-medium rounded-lg text-sm"
-                    ><svg
-                      class="mr-2 h-5 w-5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                      ></path>
-                      <path
-                        fill-rule="evenodd"
+                  <label for="my-modal-absen" class="btn btn-primary modal-button font-medium rounded-lg text-sm"
+                    v-if="(waktuTutup >= 1)"><svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
+                      </path>
+                      <path fill-rule="evenodd"
                         d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                        clip-rule="evenodd"
-                      ></path>
+                        clip-rule="evenodd"></path>
                     </svg>
-                    Absen</label
-                  >
+                    Absen</label>
+                  <button data-tip="Absensi telah ditutup"
+                    class="tooltip btn btn-black modal-button font-medium rounded-lg text-sm" v-else>
+                    Isi Absen</button>
+
 
                   <!-- Put this part before </body> tag -->
-                  <input
-                    type="checkbox"
-                    id="my-modal-absen"
-                    class="modal-toggle"
-                  />
+                  <input type="checkbox" id="my-modal-absen" class="modal-toggle" />
                   <label for="my-modal-absen" class="modal cursor-pointer">
                     <label class="modal-box w-11/12 max-w-5xl relative" for="">
                       <h3 class="text-lg font-bold text-center">
@@ -253,17 +267,10 @@ const onChangeMonth = async () => {
 
                       <Form v-slot="{ errors }" @submit="onSubmitAbsensi">
                         <div class="px-10">
-                          <div
-                            class="py-4 space-x-2 space-y-2 flex flex-wrap w-full justify-center"
-                          >
-                            <div class="w-1/3 py-2">
-                              <Field
-                                :rules="fnValidasi.validateData2"
-                                v-model="dataForm.label"
-                                name="label"
-                                class="select select-bordered w-11/12"
-                                as="select"
-                              >
+                          <div class="py-4 space-x-2 space-y-2 flex flex-wrap w-full justify-center">
+                            <div class="w-1/3 py-2 space-x-2">
+                              <!-- <Field :rules="fnValidasi.validateData2" v-model="dataForm.label" name="label"
+                                class="select select-bordered w-11/12" as="select">
                                 <option disabled selected>Pilih ?</option>
                                 <option value="Hadir">Hadir</option>
                                 <option value="Ijin">Ijin</option>
@@ -272,53 +279,34 @@ const onChangeMonth = async () => {
 
                               <div class="text-xs text-red-600 mt-1">
                                 {{ errors.label }}
-                              </div>
+                              </div> -->
+                              <span class="btn btn-darkk" @click="inputKehadiran = 'Hadir'"
+                                :class="{ 'btn-success': inputKehadiran === 'Hadir' }">Hadir</span>
+                              <span class="btn btn-darkk" @click="inputKehadiran = 'Ijin'"
+                                :class="{ 'btn-success': inputKehadiran === 'Ijin' }">Ijin</span>
+                              <span class="btn btn-darkk" @click="inputKehadiran = 'Sakit'"
+                                :class="{ 'btn-success': inputKehadiran === 'Sakit' }">Sakit</span>
                             </div>
-                            <div
-                              class="w-1/3"
-                              v-if="dataForm.label && dataForm.label != 'Hadir'"
-                            >
-                              <label for="file" class
-                                >Bukti :
+                            <div class="w-1/3" v-if="inputKehadiran != 'Hadir'">
+                              <label for="file" class>Bukti :
                                 <code class="text-red-600 text-sm">
                                   *) .jpg/.pdf/.doc/.docx
-                                </code></label
-                              >
-                              <Field
-                                v-model="dataForm.bukti"
-                                name="bukti"
-                                v-slot="{ handleChange, handleBlur }"
-                              >
-                                <input
-                                  :rules="fnValidasi.validateData2"
-                                  type="file"
-                                  @change="handleChange"
-                                  @blur="handleBlur"
-                                />
+                                </code></label>
+                              <Field v-model="dataForm.bukti" name="bukti" v-slot="{ handleChange, handleBlur }">
+                                <input :rules="fnValidasi.validateData2" type="file" @change="handleChange"
+                                  @blur="handleBlur" />
                               </Field>
                               <div class="text-xs text-red-600 mt-1">
                                 {{ errors.bukti }}
                               </div>
                             </div>
-                            <div
-                              class="w-2/3"
-                              v-if="dataForm.label && dataForm.label != 'Hadir'"
-                            >
+                            <div class="w-2/3" v-if="inputKehadiran != 'Hadir'">
                               <label for="file" class>Catatan : </label>
 
-                              <Field
-                                :rules="fnValidasi.validateData2"
-                                v-model="dataForm.alasan"
-                                v-slot="{ field }"
-                                name="alasan"
-                                type="text"
-                                class="input input-bordered w-11/12"
-                              >
-                                <textarea
-                                  v-bind="field"
-                                  class="textarea textarea-bordered w-11/12 h-24"
-                                  placeholder="Catatan"
-                                ></textarea>
+                              <Field :rules="fnValidasi.validateData2" v-model="dataForm.alasan" v-slot="{ field }"
+                                name="alasan" type="text" class="input input-bordered w-11/12">
+                                <textarea v-bind="field" class="textarea textarea-bordered w-11/12 h-24"
+                                  placeholder="Catatan"></textarea>
                               </Field>
                               <div class="text-xs text-red-600 mt-1">
                                 {{ errors.alasan }}
@@ -335,33 +323,22 @@ const onChangeMonth = async () => {
                 </div>
                 <div>
                   <!-- The button to open modal -->
-                  <label
-                    for="my-modal-jurnal"
-                    class="btn btn-success modal-button font-medium rounded-lg text-sm"
-                    ><svg
-                      class="mr-2 h-5 w-5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                      ></path>
-                      <path
-                        fill-rule="evenodd"
+                  <label for="my-modal-jurnal" class="btn btn-success modal-button font-medium rounded-lg text-sm"
+                    v-if="(waktuTutup >= 1)"><svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
+                      </path>
+                      <path fill-rule="evenodd"
                         d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                        clip-rule="evenodd"
-                      ></path>
+                        clip-rule="evenodd"></path>
                     </svg>
-                    Isi Jurnal</label
-                  >
+                    Isi Jurnal</label>
+                  <button data-tip="Isi Jurnal telah ditutup"
+                    class="tooltip btn btn-black modal-button font-medium rounded-lg text-sm" v-else>
+                    Isi Jurnal</button>
 
                   <!-- Put this part before </body> tag -->
-                  <input
-                    type="checkbox"
-                    id="my-modal-jurnal"
-                    class="modal-toggle"
-                  />
+                  <input type="checkbox" id="my-modal-jurnal" class="modal-toggle" />
                   <label for="my-modal-jurnal" class="modal cursor-pointer">
                     <label class="modal-box w-11/12 max-w-5xl relative" for="">
                       <h3 class="text-lg font-bold text-center">
@@ -369,41 +346,24 @@ const onChangeMonth = async () => {
                       </h3>
                       <Form v-slot="{ errors }" @submit="onSubmitJurnal">
                         <div class="px-10">
-                          <div
-                            class="py-4 space-x-2 space-y-2 flex flex-wrap w-full justify-center"
-                          >
+                          <div class="py-4 space-x-2 space-y-2 flex flex-wrap w-full justify-center">
                             <div class="w-1/3 py-2">
                               <label for="file" class>Judul : </label>
-                              <Field
-                                :rules="fnValidasi.validateData2"
-                                v-model="dataFormJurnal.label"
-                                name="label"
-                                type="text"
-                                class="input input-bordered w-11/12"
-                              />
+                              <Field :rules="fnValidasi.validateData2" v-model="dataFormJurnal.label" name="label"
+                                type="text" class="input input-bordered w-11/12" />
 
                               <div class="text-xs text-red-600 mt-1">
                                 {{ errors.label }}
                               </div>
                             </div>
                             <div class="w-1/3">
-                              <label for="file" class
-                                >File :
+                              <label for="file" class>File :
                                 <code class="text-red-600 text-sm">
                                   *) .jpg/.pdf/.doc/.docx
-                                </code></label
-                              >
-                              <Field
-                                v-model="dataFormJurnal.file"
-                                name="file"
-                                v-slot="{ handleChange, handleBlur }"
-                              >
-                                <input
-                                  :rules="fnValidasi.validateData2"
-                                  type="file"
-                                  @change="handleChange"
-                                  @blur="handleBlur"
-                                />
+                                </code></label>
+                              <Field v-model="dataFormJurnal.file" name="file" v-slot="{ handleChange, handleBlur }">
+                                <input :rules="fnValidasi.validateData2" type="file" @change="handleChange"
+                                  @blur="handleBlur" />
                               </Field>
                               <div class="text-xs text-red-600 mt-1">
                                 {{ errors.file }}
@@ -411,19 +371,10 @@ const onChangeMonth = async () => {
                             </div>
                             <div class="w-2/3">
                               <label for="file" class>Catatan : </label>
-                              <Field
-                                :rules="fnValidasi.validateData2"
-                                v-model="dataFormJurnal.alasan"
-                                v-slot="{ field }"
-                                name="alasan"
-                                type="text"
-                                class="input input-bordered w-11/12"
-                              >
-                                <textarea
-                                  v-bind="field"
-                                  class="textarea textarea-bordered w-11/12 h-24"
-                                  placeholder="Catatan"
-                                ></textarea>
+                              <Field :rules="fnValidasi.validateData2" v-model="dataFormJurnal.alasan"
+                                v-slot="{ field }" name="alasan" type="text" class="input input-bordered w-11/12">
+                                <textarea v-bind="field" class="textarea textarea-bordered w-11/12 h-24"
+                                  placeholder="Catatan"></textarea>
                               </Field>
                               <div class="text-xs text-red-600 mt-1">
                                 {{ errors.alasan }}
@@ -438,23 +389,12 @@ const onChangeMonth = async () => {
                     </label>
                   </label>
                 </div>
-                <button
-                  type="button"
-                  data-modal-toggle="delete-user-modal"
-                  class="btn btn-danger modal-button font-medium rounded-lg text-sm"
-                  @click="onBatalkan()"
-                >
-                  <svg
-                    class="mr-2 h-5 w-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
+                <button v-if="(waktuTutup >= 1)" type="button" data-modal-toggle="delete-user-modal"
+                  class="btn btn-danger modal-button font-medium rounded-lg text-sm" @click="onBatalkan()">
+                  <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
                       d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                      clip-rule="evenodd"
-                    ></path>
+                      clip-rule="evenodd"></path>
                   </svg>
                   Batalkan
                 </button>
@@ -470,9 +410,7 @@ const onChangeMonth = async () => {
         <div class="overflow-x-auto">
           <div class="align-middle inline-block min-w-full">
             <div class="shadow overflow-hidden">
-              <table
-                class="table table-compact min-w-full divide-y divide-gray-200"
-              >
+              <table class="table table-compact min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-100">
                   <tr>
                     <!-- <th scope="col" class="p-4">
@@ -488,46 +426,27 @@ const onChangeMonth = async () => {
                         >
                       </div>
                     </th> -->
-                    <th
-                      scope="col"
-                      class="p-4 text-left text-xs font-medium text-gray-500 uppercase"
-                    >
+                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                       No
                     </th>
-                    <th
-                      scope="col"
-                      class="p-4 text-left text-xs font-medium text-gray-500 uppercase"
-                    >
+                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                       Tanggal
                     </th>
-                    <th
-                      scope="col"
-                      class="p-4 text-left text-xs font-medium text-gray-500 uppercase"
-                    >
+                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                       Kehadiran
                     </th>
-                    <th
-                      scope="col"
-                      class="p-4 text-left text-xs font-medium text-gray-500 uppercase"
-                    >
+                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                       Jurnal
                     </th>
 
-                    <th
-                      scope="col"
-                      class="p-4 text-left text-xs font-medium text-gray-500 uppercase"
-                    >
+                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                       Status
                     </th>
                     <th scope="col" class="p-4"></th>
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr
-                    class="hover:bg-gray-100"
-                    v-for="(item, index) in data"
-                    :key="data.id"
-                  >
+                  <tr class="hover:bg-gray-100" v-for="(item, index) in data" :key="data.id">
                     <!-- <td class="p-4 w-4">
                       <div class="flex items-center">
                         <input
@@ -542,42 +461,31 @@ const onChangeMonth = async () => {
                     <td class="p-4 w-4">
                       {{ index + 1 }}
                     </td>
-                    <td
-                      class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0"
-                    >
+                    <td class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
                       <div class="text-sm font-normal text-gray-500">
                         <div class="text-base font-semibold text-gray-800">
                           {{ moment(item.tanggal).format("DD MMMM YYYY") }}
                         </div>
                       </div>
                     </td>
-                    <td
-                      class="p-4 whitespace-nowrap text-base font-medium text-gray-900"
-                    >
+                    <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                       <div class="w-full flex gap-1">
                         <div class="text-teal-600 pt-1">
                           <!-- The button to open modal -->
-                          <label
-                            :for="item.id"
-                            class="shadow border-2 rounded-lg font-medium text-sm capitalize"
-                          >
+                          <label :for="item.id" class="shadow border-2 rounded-lg font-medium text-sm capitalize">
                             {{ item.kehadiran }} -
-                            {{ item.kehadiranStatus }}</label
-                          >
+                            {{ item.kehadiranStatus }}
+                            <!-- {{ item }} -->
+                          </label>
                         </div>
                       </div>
                     </td>
-                    <td
-                      class="p-4 whitespace-nowrap text-base font-medium text-gray-900"
-                    >
+                    <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                       <div class="w-full flex gap-1">
                         <div class="text-teal-600 pt-1">
-                          <label
-                            :for="'jurnal-' + item.id"
-                            class="shadow border-2 rounded-lg font-medium text-sm capitalize"
-                          >
-                            {{ item.jurnal }} - {{ item.jurnalStatus }}</label
-                          >
+                          <label :for="'jurnal-' + item.id"
+                            class="shadow border-2 rounded-lg font-medium text-sm capitalize">
+                            {{ item.jurnal }} - {{ item.jurnalStatus }}</label>
                         </div>
                         <!-- <img
                           src="@/assets/img/flat/check-mark_2.png"
@@ -586,9 +494,7 @@ const onChangeMonth = async () => {
                         /> -->
                       </div>
                     </td>
-                    <td
-                      class="p-4 whitespace-nowrap text-base font-medium text-gray-900"
-                    >
+                    <td class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                       <div class="w-full flex gap-1">
                         <div class="text-teal-600 pt-1">
                           {{ item.status }}
@@ -616,15 +522,10 @@ const onChangeMonth = async () => {
                   <label class="modal-box relative" for="">
                     <h3 class="text-lg font-bold">
                       CATATAN :
-                      <a
-                        :href="item.kehadiranBukti"
-                        target="_blank"
-                        v-if="
-                          item.kehadiran != 'Hadir' && item.kehadiran != null
-                        "
-                      >
-                        <span class="btn btn-primary">Download </span></a
-                      >
+                      <a :href="item.kehadiranBukti" target="_blank" v-if="
+                        item.kehadiran != 'Hadir' && item.kehadiran != null
+                      ">
+                        <span class="btn btn-primary">Download </span></a>
                     </h3>
                     <p class="py-4">
                       {{ item.kehadiranCatatan }}
@@ -632,18 +533,13 @@ const onChangeMonth = async () => {
                   </label>
                 </label>
 
-                <input
-                  type="checkbox"
-                  :id="'jurnal-' + item.id"
-                  class="modal-toggle"
-                />
+                <input type="checkbox" :id="'jurnal-' + item.id" class="modal-toggle" />
                 <label :for="'jurnal-' + item.id" class="modal cursor-pointer">
                   <label class="modal-box relative" for="">
                     <h3 class="text-lg font-bold">
                       DETAIL JURNAL :
                       <a :href="item.jurnalFile" target="_blank">
-                        <span class="btn btn-primary">Download </span></a
-                      >
+                        <span class="btn btn-primary">Download </span></a>
                     </h3>
                     <p class="py-4">
                       {{ item.jurnalCatatan }}

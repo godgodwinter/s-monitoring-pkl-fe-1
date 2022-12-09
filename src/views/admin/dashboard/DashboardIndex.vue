@@ -42,7 +42,7 @@ const doPengumuman = (id) => {
     <div class="p-10">
         <BreadCrumb />
         <article class="prose w-full lg:w-full">
-            <h4>Pengumuman</h4>
+            <h4>Pengumuman :</h4>
         </article>
         <div v-for="item, index in data" :key="item.id">
             <div class="divider"></div>

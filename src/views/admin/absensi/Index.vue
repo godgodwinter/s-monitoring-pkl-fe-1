@@ -171,7 +171,30 @@ const onChangeMonth = async () => {
   console.log(dataDetail.value.monthyear);
   // console.log("====================================");
 };
-const waktuObj = { 'hour': 14, 'minute': 0, 'second': 0 };
+const hour = ref("14")
+const minute = ref("00")
+const second = ref("00")
+// getBatasWaktu from settings table
+const getDataBatasWaktu = async () => {
+  try {
+    const response = await Api.get("guest/settings/bataswaktu");
+    hour.value = response.data.jam;
+    minute.value = response.data.menit;
+    second.value = response.data.detik;
+    waktuObj.value = { 'hour': hour.value, 'minute': minute.value, 'second': second.value };
+    waktuBatas.value = ref(moment().set(waktuObj.value).format("HH:mm:ss"));
+    console.log(response.data.jam, waktuBatas.value, waktuObj.value);
+
+    return response;
+  } catch (error) {
+    Toast.danger("Warning", "Data gagal dimuat");
+    console.error(error);
+  }
+};
+
+getDataBatasWaktu();
+
+const waktuObj = { 'hour': hour.value, 'minute': minute.value, 'second': second.value };
 const waktuNow = ref(moment().format("HH:mm:ss"));
 const waktuBatas = ref(moment().set(waktuObj).format("HH:mm:ss"));
 // waktuBatas.value.set(waktuObj);
@@ -189,7 +212,7 @@ doTimer();
 
 const doChageTimer = () => {
   waktuNow.value = moment().format("HH:mm:ss")
-  let a = moment().set(waktuObj);
+  let a = moment().set(waktuObj.value);
   let b = moment();
   let result = a.diff(b);
   waktuTutup.value = result;

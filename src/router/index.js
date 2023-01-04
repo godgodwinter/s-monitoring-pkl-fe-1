@@ -112,6 +112,20 @@ const routes = [
         },
         component: () => import("@/views/admin/dashboard/PengumumanDetail.vue"),
       },
+      {
+        path: `admin/hasilpkl`,
+        name: `admin-hasilpkl-index`,
+        meta: {
+          title: "Hasil PKL",
+          icon: "mdi-home",
+          breadcrumb: {
+            name: "Hasil PKL",
+            path: `admin/hasilpkl`,
+            goto: `admin-hasilpkl-index`,
+          },
+        },
+        component: () => import("@/views/admin/hasilpkl/HasilpklIndex.vue"),
+      },
       // {
       //   path: "/pages/siswa",
       //   name: "PagesSiswaIndex",

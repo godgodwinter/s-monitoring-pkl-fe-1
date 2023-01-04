@@ -29,20 +29,21 @@ export default createStore({
       },
       //getSettings
       dataSettings: {
-        'app_nama' : 'SI MONITORING PKL',
-        'app_namapendek' : 'SIPKL',
-        'app_tapel_aktif' : '2',
-        'app_tapel_aktif_nama' : '2022/2023',
-        'pendaftaranpkl' : 'Aktif',
-        'login_siswa' : 'Aktif',
-        'login_pembimbingsekolah' : 'Aktif',
-        'login_pembimbinglapangan' : 'Aktif',
+        'app_nama': 'SI MONITORING PKL',
+        'app_namapendek': 'SIPKL',
+        'app_tapel_aktif': '2',
+        'app_tapel_aktif_nama': '2022/2023',
+        'pendaftaranpkl': 'Aktif',
+        'login_siswa': 'Aktif',
+        'login_pembimbingsekolah': 'Aktif',
+        'login_pembimbinglapangan': 'Aktif',
       },
       dataAuth: {
-        'nama' : 'Nama Siswa',
-        'kelas' : 'Kelas Siswa',
-        'nomeridentitas' : '1',
-        'hakakses' : 'User',
+        'id': null,
+        'nama': 'Nama Siswa',
+        'kelas': 'Kelas Siswa',
+        'nomeridentitas': '1',
+        'hakakses': 'User',
       },
       tempatPklSelected: [],
     };
@@ -65,7 +66,7 @@ export default createStore({
     setDataAuth(state, value) {
       state.dataAuth = value;
     },
-    setTempatPklSelected(state,value){
+    setTempatPklSelected(state, value) {
       state.tempatPklSelected = value;
     },
   },

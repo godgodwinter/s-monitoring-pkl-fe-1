@@ -46,7 +46,7 @@ const getData = async () => {
     let dk = "Kelas tidak ditemukan";
 
     if (response.dataAuth.kelasdetail) {
-      dk = `${response.dataAuth.kelasdetail.kelas.tingkatan} ${response.dataAuth.kelasdetail.kelas.jurusan} ${response.dataAuth.kelasdetail.kelas.suffix}`;
+      dk = `${response.dataAuth.kelasdetail.kelas.tingkatan} ${response.dataAuth.kelasdetail.kelas.jurusan_table.nama} ${response.dataAuth.kelasdetail.kelas.suffix}`;
     }
     dataAuth.value = {
       id: response.dataAuth.id,

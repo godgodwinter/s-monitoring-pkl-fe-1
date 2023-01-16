@@ -34,17 +34,19 @@ const routes = [
     path: "/",
     name: "Landing",
     component: LandingLayout,
-    redirect: "/",
+    redirect: "/siswa/login",
     children: [
       {
         path: "/",
         name: "LandingIndex",
         component: LandingIndex,
+        redirect: "/siswa/login",
       },
       {
         path: "/siswa",
         name: "LandingSiswa",
         component: LandingSiswa,
+        redirect: "/siswa/login",
       },
       {
         path: "/siswa/login",

@@ -160,7 +160,7 @@ const doDaftar = async () => {
             </div>
             <div class="grid grid-cols-2">
               <div class="px-4 py-2 font-semibold">Pembimbing Lapangan Telp</div>
-              <div class="px-4 py-2"> {{ pembimbinglapangan.telp }}</div>
+              <div class="px-4 py-2"> {{ pembimbinglapangan?.telp }}</div>
             </div>
             <div class="grid grid-cols-2">
               <div class="px-4 py-2 font-semibold">Pembimbing Sekolah</div>
@@ -168,7 +168,7 @@ const doDaftar = async () => {
             </div>
             <div class="grid grid-cols-2">
               <div class="px-4 py-2 font-semibold">Pembimbing Sekolah Telp</div>
-              <div class="px-4 py-2"> {{ pembimbingsekolah.telp }}</div>
+              <div class="px-4 py-2"> {{ pembimbingsekolah?.telp }}</div>
             </div>
           </div>
         </div>

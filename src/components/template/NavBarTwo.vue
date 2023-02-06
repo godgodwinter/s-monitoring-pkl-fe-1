@@ -48,8 +48,8 @@ function toggleSideBar() {
             </svg>
           </button>
           <a href="#" class="text-xl font-bold flex items-center lg:ml-2.5">
-            <img src="../../assets/img/logo/tailwindcss-icon.svg" class="h-6 mr-2" alt="Windster Logo" />
-            <span class="self-center whitespace-nowrap">SMK DW</span>
+            <!-- <img src="../../assets/img/logo/tailwindcss-icon.svg" class="h-6 mr-2" alt="Windster Logo" /> -->
+            <span class="self-center whitespace-nowrap uppercase">sistem informasi PRAKERIN</span>
           </a>
           <!-- <form action="#" method="GET" class="hidden lg:block lg:pl-32">
             <label for="topbar-search" class="sr-only">Search</label>

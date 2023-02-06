@@ -94,7 +94,7 @@ async function goLogout() {
                   <path
                     d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z" />
                 </svg>
-                <span class="ml-3">Daftar PKL </span>
+                <span class="ml-3">Daftar Prakerin </span>
               </router-link>
             </li>
             <!-- <li class="bg-white lg:w-1/2">
@@ -157,7 +157,7 @@ async function goLogout() {
                     d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                     clip-rule="evenodd" />
                 </svg>
-                <span class="ml-3">Hasil PKL </span>
+                <span class="ml-3">Hasil Prakerin </span>
               </router-link>
             </li>
             <li class="bg-white lg:w-1/2">

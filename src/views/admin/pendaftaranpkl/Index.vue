@@ -116,7 +116,7 @@ const doDaftar = async () => {
     </div>
 
     <div v-else-if="statusPendaftaran == 'Disetujui'">
-      <CardPemberitahuan title="Proses Pendaftaran PKL Selesai!"
+      <CardPemberitahuan title="Proses Pendaftaran Prakerin Selesai!"
         ket="Jangan lupa untuk selalu mengisi Absensi dan jurnal!" buttonTitle="Pergi ke Menu Praktek Kerja Lapangan"
         button-link="MenuSiswaAbsensi" />
 
@@ -133,7 +133,7 @@ const doDaftar = async () => {
         <div class="text-gray-700">
           <div class="grid md:grid-cols-2 text-sm">
             <div class="grid grid-cols-2">
-              <div class="px-4 py-2 font-semibold">Tempat PKL</div>
+              <div class="px-4 py-2 font-semibold">Tempat Prakerin</div>
               <div class="px-4 py-2">{{ dataTempatPkl.nama }}</div>
             </div>
             <div class="grid grid-cols-2">

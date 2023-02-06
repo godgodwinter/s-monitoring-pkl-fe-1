@@ -116,20 +116,13 @@ const doSubmitFile = async () => {
       </article>
       <ul class="steps steps-vertical lg:steps-horizontal py-4">
         <li class="step step-primary">Daftar</li>
-        <li class="step step-primary">Pengajuan Tempat PKL</li>
-        <li class="step step-primary">Menunggu Penempatan Tempat PKL</li>
-        <li
-          class="step"
-          :class="{
-            'step-secondary': fileBerkas == null,
-            'step-primary': fileBerkas,
-          }"
-        >
-          <p
-            data-tip="Proses Saat ini"
-            class="tooltip tooltip-left"
-            v-if="fileBerkas == null"
-          >
+        <li class="step step-primary">Pengajuan Tempat Prakerin</li>
+        <li class="step step-primary">Menunggu Penempatan Tempat Prakerin</li>
+        <li class="step" :class="{
+          'step-secondary': fileBerkas == null,
+          'step-primary': fileBerkas,
+        }">
+          <p data-tip="Proses Saat ini" class="tooltip tooltip-left" v-if="fileBerkas == null">
             Pemberkasan
           </p>
           <p v-else>Pemberkasan</p>
@@ -177,18 +170,11 @@ const doSubmitFile = async () => {
           <label for="my-modal-4" class="btn modal-button">Upload Berkas</label>
 
           <!-- The button to open modal -->
-          <router-link
-            :to="{ name: 'MenuSiswaPendaftaranPklCetakPermohonan' }"
-            target="_blank"
-          >
+          <router-link :to="{ name: 'MenuSiswaPendaftaranPklCetakPermohonan' }" target="_blank">
             <button class="btn btn-primary btn-primary-content">
               Download Surat Permohonan
-            </button></router-link
-          >
-          <router-link
-            :to="{ name: 'MenuSiswaPendaftaranPklCetakPersetujuan' }"
-            target="_blank"
-          >
+            </button></router-link>
+          <router-link :to="{ name: 'MenuSiswaPendaftaranPklCetakPersetujuan' }" target="_blank">
             <button class="btn btn-primary btn-primary-content">
               Download Surat Persetujuan
             </button>
@@ -196,24 +182,15 @@ const doSubmitFile = async () => {
         </div>
         <div class="w-full py-2 px-6 mx-auto">
           <div>
-            <vue-good-table
-              :columns="columns"
-              :rows="data"
-              :search-options="{
-                enabled: true,
-              }"
-              :pagination-options="{
-                enabled: true,
-                perPageDropdown: [10, 20, 50],
-              }"
-              styleClass="vgt-table striped bordered condensed"
-              class="py-0"
-            >
+            <vue-good-table :columns="columns" :rows="data" :search-options="{
+              enabled: true,
+            }" :pagination-options="{
+  enabled: true,
+  perPageDropdown: [10, 20, 50],
+}" styleClass="vgt-table striped bordered condensed" class="py-0">
               <template #table-row="props">
                 <span v-if="props.column.field == 'actions'">
-                  <div
-                    class="text-sm font-medium text-center flex justify-center"
-                  >
+                  <div class="text-sm font-medium text-center flex justify-center">
                     <!-- <ButtonDelete @click="doDelSiswa(index)" /> -->
                   </div>
                 </span>
@@ -237,7 +214,7 @@ const doSubmitFile = async () => {
   <label for="my-modal-4" class="modal cursor-pointer">
     <label class="modal-box relative w-full lg:w-4/12 max-w-5xl" for="">
       <h3 class="text-lg font-bold">Upload Berkas!</h3>
-      <p class="text-sm italic">Upload berkas surat balasan dari tempat PKL.</p>
+      <p class="text-sm italic">Upload berkas surat balasan dari tempat Prakerin.</p>
       <p class="text-sm italic">
         Hanya perlu salah 1 siswa untuk mengupload surat balasah dari tempat
         PKL.
@@ -253,12 +230,7 @@ const doSubmitFile = async () => {
       <div class="flex flex-wrap justify-center">
         <div class="card w-96 bg-base-100 shadow-sm">
           <div class="card-body">
-            <input
-              type="file"
-              ref="file"
-              @change="handleChange"
-              class="input w-full max-w-xs"
-            />
+            <input type="file" ref="file" @change="handleChange" class="input w-full max-w-xs" />
             <div class="card-actions justify-end">
               <button class="btn btn-primary" @click="doSubmitFile()">
                 Upload dan Lanjutkan Proses
@@ -275,8 +247,7 @@ const doSubmitFile = async () => {
           <a target="_blank" :href="fileBerkas">
             <button class="btn btn-accent btn-sm btn-accent-content">
               Lihat Berkas
-            </button></a
-          >
+            </button></a>
         </div>
         <p class="text-red-400 text-sm italic text-center" v-else>
           Berkas Belum diupload!

@@ -118,10 +118,10 @@ const routes = [
         path: `admin/hasilpkl`,
         name: `admin-hasilpkl-index`,
         meta: {
-          title: "Hasil PKL",
+          title: "Hasil Prakerin",
           icon: "mdi-home",
           breadcrumb: {
-            name: "Hasil PKL",
+            name: "Hasil Prakerin",
             path: `admin/hasilpkl`,
             goto: `admin-hasilpkl-index`,
           },
